@@ -27,9 +27,9 @@ public class ServiceHero implements Service{
 	//Construction d'un triangle
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[3];
-		vertices[0] = new Vec2(0, -1);
+		vertices[0] = new Vec2(0, 10);
 		vertices[1] = new Vec2(1, 1);
-		vertices[2] = new Vec2(-1, 1);
+		vertices[2] = new Vec2(10, 1);
 		spaceshipShape.set(vertices, vertices.length);
 		
 	//Creation du body

@@ -13,6 +13,7 @@ public class GraphicsEngine {
 	public static void drawSpaceObject(ApplicationContext context){
 		Body bodyList =PhysicsEngine.getWorld().getBodyList();
 		while(bodyList!=null){
+			final Body body = bodyList; 
 			Fixture fixture =  bodyList.getFixtureList();
 			if(fixture!=null){
 				switch (fixture.getShape().getType()) {
@@ -21,14 +22,15 @@ public class GraphicsEngine {
 					context.render(graphics -> {
 						int[] x;
 						int[] y;
+					
 						if(fixture!=null){
 							PolygonShape poly =	(PolygonShape)	fixture.getShape();
 							x = new int[poly.getVertices().length];
 							y= new int[poly.getVertices().length];
 							int i = 0;
 							for(Vec2 vertice : poly.getVertices()){
-								x[i]=(int)vertice.x * 20 + 400;
-								y[i]=(int)vertice.y * 20 + 300;
+								x[i]=(int) body.getWorldVector(vertice).x;
+								y[i]=(int) body.getWorldVector(vertice).y;
 								i++;
 							}
 							graphics.drawPolygon(x, y, poly.getVertices().length);
