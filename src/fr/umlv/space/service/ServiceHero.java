@@ -8,6 +8,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+
 public class ServiceHero implements Service{
 	
 	private final Body heroBody;
@@ -21,15 +22,15 @@ public class ServiceHero implements Service{
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 			//TODO Centrer le vaisseaux du hero au centre
-		def.position.set(0, 0);
+		def.position.set(400, 300);
 	
 	//Construction d'un triangle
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[3];
-		vertices[0].set(0, -1);
-		vertices[1].set(1, 1);
-		vertices[2].set(-1, 1);
-		spaceshipShape.set(vertices, 3);
+		vertices[0] = new Vec2(0, -1);
+		vertices[1] = new Vec2(1, 1);
+		vertices[2] = new Vec2(-1, 1);
+		spaceshipShape.set(vertices, vertices.length);
 		
 	//Creation du body
 		Body heroSpace = world.createBody(def);
@@ -38,6 +39,7 @@ public class ServiceHero implements Service{
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 0.1f;
 		fixture.shape =spaceshipShape;
+		heroSpace.createFixture(fixture);
 		return heroSpace;
 	}
 	
@@ -50,6 +52,7 @@ public class ServiceHero implements Service{
 	public void move(Vec2 x, Vec2 y) {
 		heroBody.applyLinearImpulse(x, y);
 	}
+	
 	
 
 }

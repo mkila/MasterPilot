@@ -3,7 +3,6 @@ package fr.umlv.space.service;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.World;
-
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public interface Service{
@@ -15,9 +14,6 @@ public interface Service{
 		 throw new NotImplementedException();
 	}
 	
-	default public void getType(){
-		 throw new NotImplementedException();
-	}
 	
 	public Body createBodyDef(World world);
 	public Body getBody();
