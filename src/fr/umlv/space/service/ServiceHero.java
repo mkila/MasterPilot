@@ -48,11 +48,18 @@ public class ServiceHero implements Service{
 		return heroBody;
 	}
 	
+	public Vec2 getPosition() {
+		return this.heroBody.getPosition();
+	}
+	
+	public Vec2 getLinearVelocity() {
+		return this.heroBody.getLinearVelocity();
+	}
+	
 	@Override
 	public void move(Vec2 x, Vec2 y) {
+		
 		heroBody.applyLinearImpulse(x, y);
 	}
 	
-	
-
 }
