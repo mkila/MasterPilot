@@ -8,6 +8,8 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
+import fr.umlv.physics.CategoriesSpaceObject;
+
 
 public class ServiceHero implements Service{
 	
@@ -17,7 +19,7 @@ public class ServiceHero implements Service{
 		heroBody=createBodyDef(world);
 	}
 	
-	@Override
+	
 	public Body createBodyDef(World world) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
@@ -32,6 +34,7 @@ public class ServiceHero implements Service{
 		vertices[2] = new Vec2(10, 0);
 		spaceshipShape.set(vertices, vertices.length);
 		
+		
 	//Creation du body
 		Body heroSpace = world.createBody(def);
 		
@@ -39,6 +42,8 @@ public class ServiceHero implements Service{
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 0.1f;
 		fixture.shape =spaceshipShape;
+		fixture.filter.categoryBits=CategoriesSpaceObject.HERO;
+		fixture.filter.maskBits = CategoriesSpaceObject.PLANET |CategoriesSpaceObject.ENEMIS;
 		heroSpace.createFixture(fixture);
 		return heroSpace;
 	}
@@ -58,7 +63,6 @@ public class ServiceHero implements Service{
 	
 	@Override
 	public void move(Vec2 x, Vec2 y) {
-		
 		heroBody.applyLinearImpulse(x, y);
 	}
 	
