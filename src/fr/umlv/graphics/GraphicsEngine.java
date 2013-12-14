@@ -3,6 +3,7 @@ package fr.umlv.graphics;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
@@ -11,8 +12,8 @@ import fr.umlv.space.object.SpaceObject;
 import fr.umlv.zen3.ApplicationContext;
 
 public class GraphicsEngine {
-	public static void drawSpaceObject(ApplicationContext context,SpaceObject s){
-		Fixture fixture = s.getService().getBody().getFixtureList();
+	public static void drawSpaceObject(ApplicationContext context,SpaceObject object){
+		Fixture fixture = object.getService().getBody().getFixtureList();
 		if(fixture!=null){
 			switch (fixture.getShape().getType()) {
 			//Draw POLYGON
@@ -20,18 +21,17 @@ public class GraphicsEngine {
 				context.render(graphics -> {
 					int[] x;
 					int[] y;
-					Graphics2D g =graphics;
 					if(fixture!=null){
 						PolygonShape poly =	(PolygonShape)	fixture.getShape();
 						x = new int[poly.getVertices().length];
 						y= new int[poly.getVertices().length];
 						int i = 0;
 						for(Vec2 vertice : poly.getVertices()){
-							x[i]=(int) s.getService().getBody().getWorldVector(vertice).x;
-							y[i]=(int) s.getService().getBody().getWorldVector(vertice).y;
+							x[i]=(int) object.getService().getBody().getWorldVector(vertice).x;
+							y[i]=(int) object.getService().getBody().getWorldVector(vertice).y;
 							i++;
 						}
-						g.translate(s.getService().getBody().getPosition().x, s.getService().getBody().getPosition().y);
+						graphics.translate(object.getService().getBody().getPosition().x, object.getService().getBody().getPosition().y);
 						graphics.fillPolygon(x, y, poly.getVertices().length);
 					}
 				});
@@ -48,7 +48,12 @@ public class GraphicsEngine {
 				//TODO Draw CIRCLE
 			case CIRCLE:
 				context.render(graphics -> {
-					graphics.drawString("Not fixture", 10, 10);
+					Graphics2D g = graphics;
+					CircleShape circle =	(CircleShape)	fixture.getShape();
+					g.fillOval((int)object.getService().getBody().getPosition().x,
+								(int)object.getService().getBody().getPosition().y, 
+								(int)circle.m_radius, 
+								(int)circle.m_radius);
 				});
 				break;
 

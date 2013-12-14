@@ -7,9 +7,11 @@ import org.jbox2d.common.Vec2;
 
 import fr.umlv.graphics.GraphicsEngine;
 import fr.umlv.physics.PhysicsEngine;
+import fr.umlv.space.object.Planet;
 import fr.umlv.space.object.SpaceObject;
 import fr.umlv.space.object.SpaceShip;
 import fr.umlv.space.service.ServiceHero;
+import fr.umlv.space.service.ServicePlanet;
 import fr.umlv.zen3.Application;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
@@ -22,6 +24,9 @@ public class Main {
 			    int HEIGHT = 600;
 			     
 			    SpaceObject hero = new SpaceShip(new ServiceHero(PhysicsEngine.getWorld()));
+			    
+			    SpaceObject planet1 = new Planet(new ServicePlanet(PhysicsEngine.getWorld(), 10, new Vec2(0,0)));
+			    SpaceObject planet2 = new Planet(new ServicePlanet(PhysicsEngine.getWorld(), 65, new Vec2(300,300)));
 //			    hero.getService().getBody().setLinearVelocity(new Vec2(hero.getService().getBody().getPosition().x,
 //			    		hero.getService().getBody().getPosition().y--));
 			    
@@ -45,6 +50,8 @@ public class Main {
 			        GraphicsEngine.graphicClear(context);
 			        GraphicsEngine.setBackground(context,Color.BLACK);
 			        GraphicsEngine.drawSpaceObject(context,hero);
+			        GraphicsEngine.drawSpaceObject(context,planet1);
+			        GraphicsEngine.drawSpaceObject(context,planet2);
 			        KeyboardEvent event = context.waitKeyboard();
 			        if (event == null) {
 			          return;
