@@ -2,6 +2,7 @@ package fr.umlv.main;
 
 import java.awt.Color;
 
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 
 import fr.umlv.graphics.GraphicsEngine;
@@ -32,8 +33,18 @@ public class Main {
 			        } catch (InterruptedException e) {
 			          Thread.currentThread().interrupt();
 			        }
+			        PolygonShape poly =	(PolygonShape)	hero.getService().getBody().getFixtureList().getShape();
+					int[] x = new int[poly.getVertices().length];
+					int[] y= new int[poly.getVertices().length];
+					int i = 0;
+					for(Vec2 vertice : poly.getVertices()){
+						x[i]=(int) hero.getService().getBody().getWorldVector(vertice).x;
+						y[i]=(int) hero.getService().getBody().getWorldVector(vertice).y;
+						i++;
+					}
+			        GraphicsEngine.graphicClear(context);
 			        GraphicsEngine.setBackground(context,Color.BLACK);
-			        GraphicsEngine.drawSpaceObject(context);
+			        GraphicsEngine.drawSpaceObject(context,hero);
 			        KeyboardEvent event = context.waitKeyboard();
 			        if (event == null) {
 			          return;
@@ -42,28 +53,28 @@ public class Main {
 			          if(event.getKey() == KeyboardKey.DOWN){
 			        	  Vec2 tmp = new Vec2(hero.getService().getBody().getPosition().x,hero.getService().getBody().getPosition().y--);
 			        	  hero.getService().getBody().applyLinearImpulse(tmp.mul(10), hero.getService().getBody().getPosition());
-			        	  GraphicsEngine.drawSpaceObject(context);
+			        	  GraphicsEngine.drawSpaceObject(context,hero);
 			        	  System.out.println(hero.getService().getBody().getPosition().toString());
 			        	  
 			          }
 			          if(event.getKey() == KeyboardKey.UP){
 			        	  Vec2 tmp = new Vec2(hero.getService().getBody().getPosition().x,hero.getService().getBody().getPosition().y++);
 			        	  hero.getService().getBody().applyLinearImpulse(tmp.mul(10), hero.getService().getBody().getPosition());
-			        	  GraphicsEngine.drawSpaceObject(context);
+			        	  GraphicsEngine.drawSpaceObject(context,hero);
 			        	  System.out.println(hero.getService().getBody().getPosition().toString());
 			        	  
 			          }
 			          if(event.getKey() == KeyboardKey.LEFT){
 			        	  Vec2 tmp = new Vec2(hero.getService().getBody().getPosition().x--,hero.getService().getBody().getPosition().y);
 			        	  hero.getService().getBody().applyLinearImpulse(tmp.mul(10), hero.getService().getBody().getPosition());
-			        	  GraphicsEngine.drawSpaceObject(context);
+			        	  GraphicsEngine.drawSpaceObject(context,hero);
 			        	  System.out.println(hero.getService().getBody().getPosition().toString());
 			        	  
 			          }
 			          if(event.getKey() == KeyboardKey.RIGHT){
 			        	  Vec2 tmp = new Vec2(hero.getService().getBody().getPosition().x++,hero.getService().getBody().getPosition().y);
 			        	  hero.getService().getBody().applyLinearImpulse(tmp.mul(10), hero.getService().getBody().getPosition());
-			        	  GraphicsEngine.drawSpaceObject(context);
+			        	  GraphicsEngine.drawSpaceObject(context,hero);
 			        	  System.out.println(hero.getService().getBody().getPosition().toString());
 			        	  
 			          }
