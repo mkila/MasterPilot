@@ -41,10 +41,14 @@ public class ServiceHero implements Service{
 	//Creation de la fixtureDef
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 0.1f;
+		fixture.friction= 0.1f;
+		fixture.restitution=0.5f;
+		fixture.userData = this;
 		fixture.shape =spaceshipShape;
 		fixture.filter.categoryBits=CategoriesSpaceObject.HERO;
 		fixture.filter.maskBits = CategoriesSpaceObject.PLANET |CategoriesSpaceObject.ENEMIS;
 		heroSpace.createFixture(fixture);
+		//heroSpace.setLinearDamping(0.5f);
 		return heroSpace;
 	}
 	

@@ -35,6 +35,7 @@ private final Body planetBody;
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 0.1f;
 		fixture.shape =planetShape;
+		fixture.userData=this;
 		fixture.filter.categoryBits=CategoriesSpaceObject.PLANET;
 		fixture.filter.maskBits = CategoriesSpaceObject.HERO;
 		planetSpace.createFixture(fixture);

@@ -12,6 +12,10 @@ import fr.umlv.space.object.SpaceObject;
 import fr.umlv.zen3.ApplicationContext;
 
 public class GraphicsEngine {
+
+	public static int WIDTH = 800;
+	public static int HEIGHT = 600;
+
 	public static void drawSpaceObject(ApplicationContext context,SpaceObject object){
 		Fixture fixture = object.getService().getBody().getFixtureList();
 		if(fixture!=null){
@@ -32,6 +36,7 @@ public class GraphicsEngine {
 							i++;
 						}
 						graphics.translate(object.getService().getBody().getPosition().x, object.getService().getBody().getPosition().y);
+						//graphics.translate(WIDTH/2 - object.getService().getBody().getPosition().x, HEIGHT/2 - object.getService().getBody().getPosition().y);
 						graphics.fillPolygon(x, y, poly.getVertices().length);
 					}
 				});
@@ -51,9 +56,9 @@ public class GraphicsEngine {
 					Graphics2D g = graphics;
 					CircleShape circle =	(CircleShape)	fixture.getShape();
 					g.fillOval((int)object.getService().getBody().getPosition().x,
-								(int)object.getService().getBody().getPosition().y, 
-								(int)circle.m_radius, 
-								(int)circle.m_radius);
+							(int)object.getService().getBody().getPosition().y, 
+							(int)circle.m_radius, 
+							(int)circle.m_radius);
 				});
 				break;
 
@@ -78,16 +83,23 @@ public class GraphicsEngine {
 		context.render(graphics -> {
 			Graphics2D g = graphics;
 			g.setBackground(color);
-			g.clearRect(0, 0, 800, 600);
 		});
 
 	}
-	
+
 	public static void graphicClear(ApplicationContext context) {
 		context.render(graphics -> {
 			Graphics2D g = graphics;
 			g.clearRect(0, 0, 800, 600);
 		});
 
+	}
+
+	public static void graphicCenterSpaceship(ApplicationContext context, SpaceObject object) {
+		context.render(graphics -> {
+			Graphics2D g = graphics;
+			
+			g.clearRect(0, 0, 800, 600);
+		});
 	}
 }
