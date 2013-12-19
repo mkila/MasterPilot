@@ -1,4 +1,4 @@
-package fr.umlv.movement;
+package fr.umlv.keylistener;
 
 import java.util.ArrayList;
 
@@ -6,13 +6,13 @@ import fr.umlv.zen3.ApplicationContext;
 import fr.umlv.zen3.KeyboardEvent;
 import fr.umlv.zen3.KeyboardKey;
 
-public class Movement {
+public class KeyListener {
 
 	private ArrayList<KeyboardEvent> list;
 	public enum State {UNKNOW,UP,DOWN,LEFT,RIGHT};
 	private State state;
 
-	public Movement(){
+	public KeyListener(){
 		list = new ArrayList<>();
 		state = State.UNKNOW;
 	}
