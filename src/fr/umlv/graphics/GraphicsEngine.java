@@ -52,15 +52,15 @@ public class GraphicsEngine {
 				});
 				break;
 
-				//TODO Draw CIRCLE
+				//Draw CIRCLE
 			case CIRCLE:
 				context.render(graphics -> {
 					graphics.translate(WIDTH/2 - heroPosition.x, HEIGHT/2 - heroPosition.y);
-					CircleShape circle =	(CircleShape)	fixture.getShape();
-					graphics.fillOval((int)object.getService().getBody().getPosition().x,
-							(int)object.getService().getBody().getPosition().y, 
-							(int)circle.m_radius, 
-							(int)circle.m_radius);
+					CircleShape circle =	(CircleShape)fixture.getShape();
+					graphics.fillOval((int)object.getService().getBody().getPosition().x - (int)circle.getRadius(),
+							(int)object.getService().getBody().getPosition().y - (int)circle.getRadius(), 
+							(int)circle.getRadius()*2,
+							(int)circle.getRadius()*2);
 				});
 				break;
 
@@ -97,6 +97,7 @@ public class GraphicsEngine {
 		});
 
 	}
-
+	
+	
 	
 }

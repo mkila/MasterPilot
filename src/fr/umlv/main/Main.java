@@ -30,7 +30,7 @@ public class Main {
 
 		SpaceObject hero = new SpaceShip(new ServiceHero(PhysicsEngine.getWorld()));
 		SpaceObject planet1 = new Planet(new ServicePlanet(PhysicsEngine.getWorld(), 100, new Vec2(0,0)));
-		SpaceObject planet2 = new Planet(new ServicePlanet(PhysicsEngine.getWorld(), 105, new Vec2(500,300)));
+		SpaceObject planet2 = new Planet(new ServicePlanet(PhysicsEngine.getWorld(), 100, new Vec2(800,600)));
 		//			    hero.getService().getBody().setLinearVelocity(new Vec2(hero.getService().getBody().getPosition().x,
 		//			    		hero.getService().getBody().getPosition().y--));
 
