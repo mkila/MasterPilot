@@ -30,8 +30,8 @@ public class ServiceHero implements Service{
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[3];
 		vertices[0] = new Vec2(0, 0);
-		vertices[1] = new Vec2(5,10);
-		vertices[2] = new Vec2(10, 0);
+		vertices[1] = new Vec2(15,30);
+		vertices[2] = new Vec2(30, 0);
 		spaceshipShape.set(vertices, vertices.length);
 		
 		
@@ -41,7 +41,7 @@ public class ServiceHero implements Service{
 	//Creation de la fixtureDef
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 0.1f;
-		fixture.friction= 0.1f;
+		fixture.friction= 10f;
 		fixture.restitution=0.5f;
 		fixture.userData = this;
 		fixture.shape =spaceshipShape;
