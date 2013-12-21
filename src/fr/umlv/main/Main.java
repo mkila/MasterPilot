@@ -57,46 +57,24 @@ public class Main {
 						return;
 					}
 					if(event.getKey() == KeyboardKey.DOWN){
-						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y--);
+						Vec2 tmp = new Vec2(0,-hero.getService().getBody().getWorldCenter().y);
 						hero.getService().getBody().applyLinearImpulse(tmp.mul(1), hero.getService().getBody().getWorldCenter());
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
 					}
 					if(event.getKey() == KeyboardKey.UP){
-						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y++);
+						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y);
 						hero.getService().getBody().applyLinearImpulse(tmp.mul(1), hero.getService().getBody().getWorldCenter());
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
 					}
 					if(event.getKey() == KeyboardKey.LEFT){
-						float bodyAngle = hero.getService().getBody().getAngle();
-						Vec2 tmp = new Vec2(-50-hero.getService().getBody().getPosition().x, 0+hero.getService().getBody().getPosition().y);
-						//hero.getService().getBody().applyLinearImpulse(tmp.mul(10), hero.getService().getBody().getPosition());
-						float desiredAngle = (float) atan2( -tmp.x, tmp.y );
-						float totalRotation = desiredAngle - bodyAngle;
-						while ( totalRotation < Math.toRadians(-180) ) totalRotation += Math.toRadians(360);
-						while ( totalRotation > Math.toRadians(180) ) totalRotation -= Math.toRadians(360);
-						float change = (float) (Math.toRadians(5)); 
-						float newAngle = bodyAngle + Math.min( change, Math.max(-change, totalRotation));
-						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), newAngle );
-						//GraphicsEngine.drawSpaceObject(context,hero);
-
+						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), hero.getService().getBody().getAngle()+0.02f);
 						System.out.println("angle :"+hero.getService().getBody().getAngle());
 
 					}
 					if(event.getKey() == KeyboardKey.RIGHT){
-						float bodyAngle = hero.getService().getBody().getAngle();
-						Vec2 tmp = new Vec2(50+hero.getService().getBody().getPosition().x, 0+hero.getService().getBody().getPosition().y);
-						//hero.getService().getBody().applyLinearImpulse(tmp.mul(100), hero.getService().getBody().getPosition());
-						float desiredAngle = (float) atan2( -tmp.x, tmp.y );
-						float totalRotation = desiredAngle - bodyAngle;
-						while ( totalRotation < Math.toRadians(-180) ) totalRotation += Math.toRadians(360);
-						while ( totalRotation > Math.toRadians(180) ) totalRotation -= Math.toRadians(360);
-						float change = (float) (Math.toRadians(5)); 
-						float newAngle = bodyAngle + Math.min( change, Math.max(-change, totalRotation));
-						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), newAngle );
-						//GraphicsEngine.drawSpaceObject(context,hero);
-
+						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), hero.getService().getBody().getAngle()-0.02f);
 						System.out.println("angle :"+hero.getService().getBody().getAngle());
 
 					}
