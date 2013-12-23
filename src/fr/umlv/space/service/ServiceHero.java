@@ -1,5 +1,6 @@
 package fr.umlv.space.service;
 
+import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -37,7 +38,6 @@ public class ServiceHero implements Service{
 		
 	//Creation du body
 		Body heroSpace = world.createBody(def);
-		
 	//Creation de la fixtureDef
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 0.1f;
