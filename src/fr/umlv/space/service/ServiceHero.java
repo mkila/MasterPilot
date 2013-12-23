@@ -1,6 +1,5 @@
 package fr.umlv.space.service;
 
-import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -24,8 +23,10 @@ public class ServiceHero implements Service{
 	public Body createBodyDef(World world) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
-			//TODO Centrer le vaisseaux du hero au centre
 		def.position.set(400, 300);
+		def.angle = (float)Math.PI;
+
+	
 	
 	//Construction d'un triangle
 		PolygonShape spaceshipShape = new PolygonShape();
@@ -40,7 +41,7 @@ public class ServiceHero implements Service{
 		Body heroSpace = world.createBody(def);
 	//Creation de la fixtureDef
 		FixtureDef fixture =new FixtureDef();
-		fixture.density= 0.1f;
+		fixture.density= 10f;
 		fixture.friction= 10f;
 		fixture.restitution=0.5f;
 		fixture.userData = this;
@@ -48,7 +49,8 @@ public class ServiceHero implements Service{
 		fixture.filter.categoryBits=CategoriesSpaceObject.HERO;
 		fixture.filter.maskBits = CategoriesSpaceObject.PLANET |CategoriesSpaceObject.ENEMIS;
 		heroSpace.createFixture(fixture);
-		//heroSpace.setLinearDamping(0.5f);
+		heroSpace.setLinearDamping(0.05f);
+		heroSpace.setAngularDamping(0.5f);
 		return heroSpace;
 	}
 	
