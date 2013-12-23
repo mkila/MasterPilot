@@ -57,13 +57,13 @@ public class Main {
 						return;
 					}
 					if(event.getKey() == KeyboardKey.DOWN){
-						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y--);
+						Vec2 tmp = new Vec2(0,-hero.getService().getBody().getWorldCenter().y);
 						hero.getService().getBody().applyLinearImpulse(tmp.mul(1), hero.getService().getBody().getWorldCenter());
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
 					}
 					if(event.getKey() == KeyboardKey.UP){
-						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y++);
+						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y);
 						hero.getService().getBody().applyLinearImpulse(tmp.mul(1), hero.getService().getBody().getWorldCenter());
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
@@ -74,6 +74,8 @@ public class Main {
 						hero.getService().getBody().applyTorque(torque);
 						//GraphicsEngine.drawSpaceObject(context,hero);
 						
+
+						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), hero.getService().getBody().getAngle()+0.02f);
 						System.out.println("angle :"+hero.getService().getBody().getAngle());
 
 					}
@@ -83,6 +85,7 @@ public class Main {
 						hero.getService().getBody().applyTorque(torque);
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
+						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), hero.getService().getBody().getAngle()-0.02f);
 						System.out.println("angle :"+hero.getService().getBody().getAngle());
 
 					}
