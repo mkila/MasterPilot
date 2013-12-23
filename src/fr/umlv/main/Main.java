@@ -34,7 +34,7 @@ public class Main {
 		//			    hero.getService().getBody().setLinearVelocity(new Vec2(hero.getService().getBody().getPosition().x,
 		//			    		hero.getService().getBody().getPosition().y--));
 		
-
+		
 		System.out.println(hero.getService().getBody().getPosition().toString());
 		Application.run("MasterPilot", WIDTH, HEIGHT, context -> {
 			for(;;) {
@@ -57,14 +57,14 @@ public class Main {
 						return;
 					}
 					if(event.getKey() == KeyboardKey.DOWN){
-						Vec2 tmp = new Vec2(0,-hero.getService().getBody().getWorldCenter().y);
-						hero.getService().getBody().applyLinearImpulse(tmp.mul(1), hero.getService().getBody().getWorldCenter());
+						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y);
+						hero.getService().getBody().applyForceToCenter(tmp.mul(100));
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
 					}
 					if(event.getKey() == KeyboardKey.UP){
-						Vec2 tmp = new Vec2(0,hero.getService().getBody().getWorldCenter().y);
-						hero.getService().getBody().applyLinearImpulse(tmp.mul(1), hero.getService().getBody().getWorldCenter());
+						Vec2 tmp = new Vec2(0,-hero.getService().getBody().getWorldCenter().y);
+						hero.getService().getBody().applyForceToCenter(tmp.mul(100));
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
 					}
@@ -73,9 +73,7 @@ public class Main {
 						float torque = hero.getService().getBody().getInertia() * (1 - hero.getService().getBody().getAngularVelocity() ) / time;
 						hero.getService().getBody().applyTorque(torque);
 						//GraphicsEngine.drawSpaceObject(context,hero);
-						
-
-						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), hero.getService().getBody().getAngle()+0.02f);
+					
 						System.out.println("angle :"+hero.getService().getBody().getAngle());
 
 					}
@@ -83,9 +81,9 @@ public class Main {
 						float time = 1; // one second
 						float torque = hero.getService().getBody().getInertia() * (-1 - hero.getService().getBody().getAngularVelocity() ) / time;
 						hero.getService().getBody().applyTorque(torque);
+						
 						//GraphicsEngine.drawSpaceObject(context,hero);
 
-						hero.getService().getBody().setTransform( hero.getService().getBody().getPosition(), hero.getService().getBody().getAngle()-0.02f);
 						System.out.println("angle :"+hero.getService().getBody().getAngle());
 
 					}
