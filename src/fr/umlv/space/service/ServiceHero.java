@@ -1,5 +1,7 @@
 package fr.umlv.space.service;
 
+import java.util.LinkedList;
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -9,14 +11,19 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
 import fr.umlv.physics.CategoriesSpaceObject;
+import fr.umlv.physics.PhysicsEngine;
+import fr.umlv.space.object.Fire;
 
 
 public class ServiceHero implements Service{
 	
 	private final Body heroBody;
+	private final LinkedList<Fire> listFire;
+	
 	
 	public ServiceHero(World world) {
 		heroBody=createBodyDef(world);
+		listFire = new LinkedList<Fire>();
 	}
 	
 	
@@ -70,6 +77,18 @@ public class ServiceHero implements Service{
 	@Override
 	public void move(Vec2 implultion) {
 		heroBody.applyForceToCenter(implultion);
+	}
+	
+	@Override
+	public LinkedList<Fire> getListFire() {
+		return listFire;
+	}
+	
+	@Override
+	public void fire() {
+		Fire fire=  new Fire(new ServiceFire(PhysicsEngine.getWorld(),
+				heroBody.getAngle(), heroBody.getWorldCenter()));
+		listFire.offerFirst(fire);
 	}
 	
 }
