@@ -2,14 +2,14 @@ package fr.umlv.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-
+import java.util.LinkedList;
 
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 
-
+import fr.umlv.space.object.Fire;
 import fr.umlv.space.object.SpaceObject;
 import fr.umlv.zen3.ApplicationContext;
 
@@ -96,6 +96,13 @@ public class GraphicsEngine {
 			g.clearRect(0, 0, 800, 600);
 		});
 
+	}
+	
+	public static void drawFire(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
+		LinkedList<Fire> fires = object.getService().getListFire();
+		for (Fire fire : fires) {
+			drawSpaceObject(context, fire, heroPosition);
+		}
 	}
 	
 	
