@@ -1,19 +1,27 @@
 package fr.umlv.space.service;
 
+import java.util.LinkedList;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
+
+import fr.umlv.space.object.Fire;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public interface Service{
-	default public void move(Vec2 x,Vec2 y){
+	default public void move(Vec2 impultion){
 		 throw new NotImplementedException();
 	}
 	
-	default public void getImg(){
+	default public LinkedList<Fire> getListFire(){
 		 throw new NotImplementedException();
 	}
 	
+	default public void fire(){
+		 throw new NotImplementedException();
+	}
 	
 	public Body getBody();
+	
 	
 }
