@@ -1,6 +1,5 @@
 package fr.umlv.space.service;
 
-import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -66,8 +65,8 @@ public class ServiceHero implements Service{
 	}
 	
 	@Override
-	public void move(Vec2 x, Vec2 y) {
-		heroBody.applyLinearImpulse(x, y);
+	public void move(Vec2 implultion) {
+		heroBody.applyForceToCenter(implultion);
 	}
 	
 }
