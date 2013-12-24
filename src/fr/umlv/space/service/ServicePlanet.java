@@ -26,7 +26,7 @@ private final Body planetBody;
 	
 	//Construction d'un cercle
 		CircleShape planetShape = new CircleShape();
-		planetShape.setRadius(radius);;
+		planetShape.setRadius(radius);
 		
 	//Creation du body
 		Body planetSpace = world.createBody(def);

@@ -4,16 +4,22 @@ import java.awt.Color;
 
 
 
+
+
 import org.jbox2d.common.Vec2;
+
+
 
 
 
 import fr.umlv.graphics.GraphicsEngine;
 import fr.umlv.keylistener.KeyListener;
 import fr.umlv.physics.PhysicsEngine;
+import fr.umlv.space.object.Bullet;
 import fr.umlv.space.object.Planet;
 import fr.umlv.space.object.SpaceObject;
 import fr.umlv.space.object.SpaceShip;
+import fr.umlv.space.service.ServiceBullet;
 import fr.umlv.space.service.ServiceHero;
 import fr.umlv.space.service.ServicePlanet;
 import fr.umlv.zen3.Application;
@@ -27,10 +33,13 @@ public class Main {
 		  float timeStep = 1.0f/60.0f;      //the length of time passed to simulate (seconds)
 		  int velocityIterations = 2;   //how strongly to correct velocity
 		  int positionIterations = 2; 
-
+		  
 		SpaceObject hero = new SpaceShip(new ServiceHero(PhysicsEngine.getWorld()));
 		SpaceObject planet1 = new Planet(new ServicePlanet(PhysicsEngine.getWorld(), 100, new Vec2(0,0)));
 		SpaceObject planet2 = new Planet(new ServicePlanet(PhysicsEngine.getWorld(), 100, new Vec2(800,600)));
+		SpaceObject bullet = new Bullet(new ServiceBullet(PhysicsEngine.getWorld(),
+				hero.getService().getBody().getAngle(), hero.getService().getBody().getPosition()));
+		
 		System.out.println(hero.getService().getBody().getPosition().toString());
 		Application.run("MasterPilot", WIDTH, HEIGHT, context -> {
 			for(;;) {
@@ -45,7 +54,8 @@ public class Main {
 				GraphicsEngine.drawSpaceObject(context,hero,hero.getService().getBody().getWorldCenter());
 				GraphicsEngine.drawSpaceObject(context,planet1,hero.getService().getBody().getWorldCenter());
 				GraphicsEngine.drawSpaceObject(context,planet2,hero.getService().getBody().getWorldCenter());
-				KeyListener.listen(hero, context);
+				GraphicsEngine.drawSpaceObject(context,bullet,hero.getService().getBody().getWorldCenter());
+				KeyListener.listen(hero, bullet, context);
 				
 			}
 		});
