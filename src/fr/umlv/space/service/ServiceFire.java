@@ -7,7 +7,6 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-
 import fr.umlv.physics.CategoriesSpaceObject;
 
 public class ServiceFire implements Service{
@@ -42,6 +41,7 @@ private final Body missileBody;
 		
 	//Creation du body
 		Body missileSpace = world.createBody(def);
+	
 	//Creation de la fixtureDef
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 1f;

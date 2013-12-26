@@ -26,7 +26,7 @@ public class KeyListener {
 			if(event.getKey() == KeyboardKey.UP){
 				Vec2 tmp = new Vec2((-(float)Math.sin(hero.getService().getBody().getAngle()))*1000,
 									((float)Math.cos(hero.getService().getBody().getAngle()))*1000);
-				hero.getService().getBody().applyForceToCenter(tmp.mul(100));
+				hero.getService().getBody().applyForceToCenter(tmp.mul(200));
 
 			}
 			if(event.getKey() == KeyboardKey.RIGHT){
