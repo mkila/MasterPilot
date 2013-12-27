@@ -9,11 +9,11 @@ import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 import fr.umlv.physics.CategoriesSpaceObject;
 
-public class ServiceFire implements Service{
+public class ServiceFireHero implements Service{
 
 private final Body missileBody;
 	
-	public ServiceFire(World world,float angle, Vec2 shipPosition) {
+	public ServiceFireHero(World world,float angle, Vec2 shipPosition) {
 		missileBody=createBodyDef(world,angle,shipPosition);
 		Vec2 tmp = new Vec2(-(float)Math.sin(angle)*1000,
 				(float)Math.cos(angle)*1000);
