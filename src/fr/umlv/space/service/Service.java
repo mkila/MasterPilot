@@ -17,7 +17,7 @@ public interface Service{
 		 throw new NotImplementedException();
 	}
 	
-	default public void fire(){
+	default public void fire(Vec2 positionHero){
 		 throw new NotImplementedException();
 	}
 	
