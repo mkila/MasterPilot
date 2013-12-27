@@ -20,13 +20,13 @@ public class KeyListener {
 			if(event.getKey() == KeyboardKey.DOWN){
 				Vec2 tmp = new Vec2((-(float)Math.sin(hero.getService().getBody().getAngle()))*1000,
 						((float)Math.cos(hero.getService().getBody().getAngle()))*1000);
-	hero.getService().getBody().applyForceToCenter(tmp.mul(-100));
+				hero.getService().getBody().applyForceToCenter(tmp.mul(-500));
 
 			}
 			if(event.getKey() == KeyboardKey.UP){
 				Vec2 tmp = new Vec2((-(float)Math.sin(hero.getService().getBody().getAngle()))*1000,
-									((float)Math.cos(hero.getService().getBody().getAngle()))*1000);
-				hero.getService().getBody().applyForceToCenter(tmp.mul(200));
+						((float)Math.cos(hero.getService().getBody().getAngle()))*1000);
+				hero.getService().getBody().applyForceToCenter(tmp.mul(500));
 
 			}
 			if(event.getKey() == KeyboardKey.RIGHT){
@@ -43,9 +43,9 @@ public class KeyListener {
 				System.out.println("angle :"+hero.getService().getBody().getAngle());
 
 			}
-			
+
 			if(event.getKey() == KeyboardKey.SPACE){
-				hero.getService().fire();
+				hero.getService().fire(null);
 			}
 
 		});
