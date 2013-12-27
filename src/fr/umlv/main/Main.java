@@ -1,20 +1,7 @@
 package fr.umlv.main;
 
-<<<<<<< HEAD
 import java.awt.Color;
-
-
-
-
-
-
 import org.jbox2d.common.Vec2;
-
-
-
-
-
-
 import fr.umlv.graphics.GraphicsEngine;
 import fr.umlv.keylistener.KeyListener;
 import fr.umlv.physics.PhysicsEngine;
@@ -25,8 +12,6 @@ import fr.umlv.space.service.ServiceHero;
 import fr.umlv.space.service.ServicePlanet;
 import fr.umlv.space.service.ServiceTIE;
 import fr.umlv.zen3.Application;
-=======
->>>>>>> origin/MissileCed
 
 public class Main {
 
@@ -36,7 +21,6 @@ public class Main {
 	 *
 	 **/
 	public static void main(String[] args) {
-<<<<<<< HEAD
 		int WIDTH = 800;
 		int HEIGHT = 600;
 		  float timeStep = 1.0f/60.0f;      //the length of time passed to simulate (seconds)
@@ -71,9 +55,7 @@ public class Main {
 
 			}
 		});
-=======
-		Menu.printMenu();
->>>>>>> origin/MissileCed
+		//Menu.printMenu();
 	}
 
 }

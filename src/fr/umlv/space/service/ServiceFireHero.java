@@ -11,15 +11,9 @@ import fr.umlv.physics.CategoriesSpaceObject;
 
 public class ServiceFireHero implements Service{
 
-<<<<<<< HEAD:src/fr/umlv/space/service/ServiceFireHero.java
 private final Body missileBody;
 	
 	public ServiceFireHero(World world,float angle, Vec2 shipPosition) {
-=======
-	private final Body missileBody;
-
-	public ServiceFire(World world,float angle, Vec2 shipPosition) {
->>>>>>> origin/MissileCed:src/fr/umlv/space/service/ServiceFire.java
 		missileBody=createBodyDef(world,angle,shipPosition);
 		Vec2 tmp = new Vec2(-(float)Math.sin(angle)*1000,
 				(float)Math.cos(angle)*1000);
@@ -47,12 +41,9 @@ private final Body missileBody;
 
 		//Creation du body
 		Body missileSpace = world.createBody(def);
-<<<<<<< HEAD:src/fr/umlv/space/service/ServiceFireHero.java
 	
 	//Creation de la fixtureDef
-=======
-		//Creation de la fixtureDef
->>>>>>> origin/MissileCed:src/fr/umlv/space/service/ServiceFire.java
+
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 1f;
 		fixture.friction= 1f;
