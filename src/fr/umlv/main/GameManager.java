@@ -1,5 +1,9 @@
 package fr.umlv.main;
 
+import java.io.IOException;
+
+import org.jdom2.JDOMException;
+
 import fr.umlv.zen3.ApplicationContext;
 
 public interface GameManager {
@@ -17,7 +21,9 @@ public interface GameManager {
 	 * 
 	 * @param context a context object that take the window
 	 *  of the Menu class
+	 * @throws IOException 
+	 * @throws JDOMException 
 	 */
-	void printPlay(ApplicationContext context);
+	void printPlay(ApplicationContext context) throws JDOMException, IOException;
 
 }

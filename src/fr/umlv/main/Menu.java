@@ -49,7 +49,10 @@ public class Menu {
 				KeyboardEvent event = context.waitKeyboard();
 				if(event.getKey() == KeyboardKey.S){
 					Game g = new Game();
-					g.printPlay(context);
+					try {
+						g.printPlay(context);
+					} catch (Exception e) {
+					}
 				}
 				if(event.getKey() == KeyboardKey.E){
 					System.exit(0);
