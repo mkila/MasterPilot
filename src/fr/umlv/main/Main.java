@@ -1,5 +1,6 @@
 package fr.umlv.main;
 
+<<<<<<< HEAD
 import java.awt.Color;
 
 
@@ -24,11 +25,18 @@ import fr.umlv.space.service.ServiceHero;
 import fr.umlv.space.service.ServicePlanet;
 import fr.umlv.space.service.ServiceTIE;
 import fr.umlv.zen3.Application;
+=======
+>>>>>>> origin/MissileCed
 
 public class Main {
 
-
+	/**
+	 * @author Baulamon Cedric - Tran Minh-Duc
+	 * Start of the application 
+	 *
+	 **/
 	public static void main(String[] args) {
+<<<<<<< HEAD
 		int WIDTH = 800;
 		int HEIGHT = 600;
 		  float timeStep = 1.0f/60.0f;      //the length of time passed to simulate (seconds)
@@ -63,6 +71,9 @@ public class Main {
 
 			}
 		});
+=======
+		Menu.printMenu();
+>>>>>>> origin/MissileCed
 	}
 
 }
