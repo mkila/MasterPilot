@@ -6,9 +6,13 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
 import fr.umlv.space.object.Fire;
+import fr.umlv.space.object.munition.Munition;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public interface Service{
+	
+	enum TYPEBONUS {BOMB,MEGA};
+	
 	default public void move(Vec2 impultion){
 		 throw new NotImplementedException();
 	}
@@ -17,11 +21,26 @@ public interface Service{
 		 throw new NotImplementedException();
 	}
 	
+	default public Munition getMunition() {
+		throw new NotImplementedException();
+	}
+	
 	default public void fire(){
-		 throw new NotImplementedException();
+		throw new NotImplementedException();
+	}
+	
+	default public TYPEBONUS getType(){
+		throw new NotImplementedException();
+	}
+	
+	default public void usedBonus(ServiceHero hero){
+		throw new NotImplementedException();
+	};
+	
+	default public boolean getUsed() {
+		throw new NotImplementedException();
 	}
 	
 	public Body getBody();
-	
 	
 }

@@ -22,7 +22,7 @@ public class ServiceFire implements Service{
 	}
 
 
-	public Body createBodyDef(World world,float angle, Vec2 shipPosition) {
+	private Body createBodyDef(World world,float angle, Vec2 shipPosition) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(shipPosition.x, shipPosition.y);

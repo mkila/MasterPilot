@@ -19,7 +19,7 @@ private final Body planetBody;
 	}
 	
 	
-	public Body createBodyDef(World world,float radius,Vec2 position) {
+	private Body createBodyDef(World world,float radius,Vec2 position) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.STATIC;
 		def.position.set(position.x, position.y);

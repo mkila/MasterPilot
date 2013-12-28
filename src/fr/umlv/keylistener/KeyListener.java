@@ -47,6 +47,10 @@ public class KeyListener {
 			if(event.getKey() == KeyboardKey.SPACE){
 				hero.getService().fire();
 			}
+			
+			if(event.getKey() == KeyboardKey.Q){
+				
+			}
 
 		});
 	}

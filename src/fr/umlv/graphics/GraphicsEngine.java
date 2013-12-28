@@ -11,6 +11,7 @@ import org.jbox2d.dynamics.Fixture;
 
 import fr.umlv.space.object.Fire;
 import fr.umlv.space.object.SpaceObject;
+import fr.umlv.space.service.Service;
 import fr.umlv.zen3.ApplicationContext;
 
 public class GraphicsEngine {
@@ -97,14 +98,39 @@ public class GraphicsEngine {
 		});
 
 	}
-	
+
 	public static void drawFire(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
 		LinkedList<Fire> fires = object.getService().getListFire();
 		for (Fire fire : fires) {
 			drawSpaceObject(context, fire, heroPosition);
 		}
 	}
-	
-	
-	
+
+	public static void drawBomb(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
+		Fixture fixture = object.getService().getBody().getFixtureList();
+
+		context.render(graphics -> {
+			graphics.translate(WIDTH/2 - heroPosition.x, HEIGHT/2 - heroPosition.y);
+			int[] x;
+			int[] y;
+			if(fixture!=null){
+				PolygonShape poly =	(PolygonShape)	fixture.getShape();
+				x = new int[poly.getVertices().length];
+				y= new int[poly.getVertices().length];
+				int i = 0;
+				for(Vec2 vertice : poly.getVertices()){
+					x[i]=(int) object.getService().getBody().getWorldPoint(vertice).x;
+					y[i]=(int) object.getService().getBody().getWorldPoint(vertice).y;
+					i++;
+				}
+				if(object.getService().getType() == Service.TYPEBONUS.BOMB){
+					graphics.setColor(Color.RED);
+				}
+				else
+					graphics.setColor(Color.YELLOW);
+				graphics.fillPolygon(x, y, poly.getVertices().length);
+			}
+		});
+	}
+
 }

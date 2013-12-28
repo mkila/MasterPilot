@@ -16,7 +16,6 @@ public class Parsor {
 	}
 	
 	public static int parserXML(String fileName,String typeObject) throws JDOMException, IOException{
-
 		SAXBuilder sxb = new SAXBuilder();
 		Document document;
 		document = sxb.build(new File(fileName));

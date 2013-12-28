@@ -13,21 +13,24 @@ import org.jbox2d.dynamics.World;
 import fr.umlv.physics.CategoriesSpaceObject;
 import fr.umlv.physics.PhysicsEngine;
 import fr.umlv.space.object.Fire;
+import fr.umlv.space.object.munition.Munition;
 
 
 public class ServiceHero implements Service{
 	
 	private final Body heroBody;
 	private final LinkedList<Fire> listFire;
+	private Munition munitionBomb;
 	
 	
 	public ServiceHero(World world) {
 		heroBody=createBodyDef(world);
 		listFire = new LinkedList<Fire>();
+		munitionBomb = new Munition(0, 0);
 	}
 	
 	
-	public Body createBodyDef(World world) {
+	private Body createBodyDef(World world) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(400, 300);
@@ -62,17 +65,15 @@ public class ServiceHero implements Service{
 	}
 	
 	@Override
+	public Munition getMunition() {
+		return this.munitionBomb;
+	}
+	
+	@Override
 	public Body getBody() {
 		return heroBody;
 	}
 	
-	public Vec2 getPosition() {
-		return this.heroBody.getPosition();
-	}
-	
-	public Vec2 getLinearVelocity() {
-		return this.heroBody.getLinearVelocity();
-	}
 	
 	@Override
 	public void move(Vec2 implultion) {
