@@ -37,7 +37,7 @@ private final Body planetBody;
 		fixture.shape =planetShape;
 		fixture.userData=this;
 		fixture.filter.categoryBits=CategoriesSpaceObject.PLANET;
-		fixture.filter.maskBits = CategoriesSpaceObject.HERO;
+		fixture.filter.maskBits = CategoriesSpaceObject.HERO | CategoriesSpaceObject.ENEMIS;
 		planetSpace.createFixture(fixture);
 		return planetSpace;
 	}
