@@ -36,7 +36,7 @@ public class Game implements GameManager{
 		SpaceObject hero = new SpaceShip(new ServiceHero(PhysicsEngine.getWorld()));
 		lvl.createPlanet(Parsor.parserXML("stage1.xml","planet"));
 		lvl.createBomb(Parsor.parserXML("stage1.xml","bomb"), Service.TYPEBONUS.BOMB);
-		lvl.createBomb(Parsor.parserXML("stage1.xml","bomb"), Service.TYPEBONUS.MEGA);
+		lvl.createBomb(Parsor.parserXML("stage1.xml","mega"), Service.TYPEBONUS.MEGA);
 		for(;;){
 			try {
 				Thread.sleep(10);
@@ -68,9 +68,9 @@ public class Game implements GameManager{
 				graphics.drawString(String.valueOf(String.format("%1.0f",t.getMilliseconds()/1000)), 750,20);
 				//Print the bomb ammo
 				graphics.setColor(Color.RED);
-				graphics.drawString("Bomb: "+hero.getService().getMunition().getMunitionBomb(),700,50);
+				graphics.drawString("Bomb: "+hero.getService().getMunition().getMunitionBomb(),675,50);
 				graphics.setColor(Color.YELLOW);
-				graphics.drawString("Mega: "+hero.getService().getMunition().getMunitionMega(),700,80);
+				graphics.drawString("Mega: "+hero.getService().getMunition().getMunitionMega(),675,80);
 			});
 		}
 	}

@@ -5,9 +5,6 @@ import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
 import org.jbox2d.dynamics.contacts.Contact;
 
-import fr.umlv.space.service.ServiceBomb;
-import fr.umlv.space.service.ServiceHero;
-
 public class ListernerCollision implements ContactListener{
 
 	@Override

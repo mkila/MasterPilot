@@ -1,5 +1,6 @@
 package fr.umlv.space.service;
 
+
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -25,7 +26,7 @@ public class ServiceBomb implements Service{
 	private Body createBodyDef(World world,Vec2 position,TYPEBONUS type){
 		this.used = false;
 		BodyDef bodyDef = new  BodyDef();
-		bodyDef.type = BodyType.STATIC;
+		bodyDef.type = BodyType.DYNAMIC;
 		bodyDef.position = position;
 		bodyDef.userData = TypeObject.BOMB;
 		Body bomb = world.createBody(bodyDef);
@@ -74,5 +75,5 @@ public class ServiceBomb implements Service{
 			hero.getMunition().setMunitionMega(hero.getMunition().getMunitionMega() + 1);
 		this.used = true;
 	}
-	
+
 }
