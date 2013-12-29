@@ -19,8 +19,18 @@ import fr.umlv.space.service.ServiceHero;
 import fr.umlv.zen3.ApplicationContext;
 
 public class Game implements GameManager{
+	
+	/**
+	 * This class load all you need for your level
+	 * 
+	 **/
 
 	private final Level lvl;
+	
+	/**
+	 * The constructor take a level, 
+	 * @param Level, lvl load the level you have selected
+	 **/
 
 	public Game(){
 		lvl = new Level();

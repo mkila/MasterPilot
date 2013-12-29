@@ -20,7 +20,6 @@ public class ServiceBomb implements Service{
 
 	public ServiceBomb(World world,Vec2 position,TYPEBONUS type) {
 		bombBody = createBodyDef(world,position,type);
-
 	}
 
 	private Body createBodyDef(World world,Vec2 position,TYPEBONUS type){

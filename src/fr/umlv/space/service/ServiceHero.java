@@ -26,7 +26,7 @@ public class ServiceHero implements Service{
 	public ServiceHero(World world) {
 		heroBody=createBodyDef(world);
 		listFire = new LinkedList<Fire>();
-		munitionBomb = new Munition(15, 0);
+		munitionBomb = new Munition(0, 15);
 	}
 
 
@@ -108,11 +108,17 @@ public class ServiceHero implements Service{
 	
 	public void bomb(float factor) {
 		LinkedList<Body> bodyList = new LinkedList<>();
+		System.out.println("hero"+heroBody.getPosition().toString());
+		float rangeRadius = 400; 
 		for (Body b = heroBody.getWorld().getBodyList(); b != null; b = b.getNext()) {
 			if(b.getType() == BodyType.DYNAMIC && b.getFixtureList() != heroBody.getFixtureList())
+				if((heroBody.getPosition().x-rangeRadius<b.getPosition().x) && (b.getPosition().x<heroBody.getPosition().x+rangeRadius)
+					&&	(heroBody.getPosition().y-rangeRadius<b.getPosition().y) && (b.getPosition().y<heroBody.getPosition().y+rangeRadius))
 				bodyList.add(b);
+			
+			
 		}
-
+		System.out.println(bodyList.size());
 		for(int i=0; i<bodyList.size();i++){
 			double diffX = bodyList.get(i).getPosition().x - heroBody.getPosition().x;
 			double diffY = bodyList.get(i).getPosition().y - heroBody.getPosition().y;
@@ -121,6 +127,7 @@ public class ServiceHero implements Service{
 			double normalizedY = diffY / distance;
 			Vec2 force = new Vec2((float)normalizedX * factor, (float)normalizedY * factor);
 			bodyList.get(i).applyLinearImpulse(force, bodyList.get(i).getWorldCenter());
+			
 		}
 
 	}
