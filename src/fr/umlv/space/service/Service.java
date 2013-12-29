@@ -54,5 +54,8 @@ public interface Service{
 	public boolean getFlagCollision();
 	public void collision();
 	public void destroy();
-
+	
+	default public void setCollision(boolean c){
+		throw new NotImplementedException();
+	};
 }

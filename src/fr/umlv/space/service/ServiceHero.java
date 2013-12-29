@@ -2,7 +2,6 @@ package fr.umlv.space.service;
 
 import java.util.LinkedList;
 
-
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
@@ -29,14 +28,11 @@ public class ServiceHero implements Service{
 		munitionBomb = new Munition(0, 15);
 	}
 
-
 	private Body createBodyDef(World world) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(400, 300);
 		def.angle = (float)Math.PI;
-
-
 
 		//Construction d'un triangle
 		PolygonShape spaceshipShape = new PolygonShape();
@@ -45,7 +41,6 @@ public class ServiceHero implements Service{
 		vertices[1] = new Vec2(15,30);
 		vertices[2] = new Vec2(30, 0);
 		spaceshipShape.set(vertices, vertices.length);
-
 
 		//Creation du body
 		Body heroSpace = world.createBody(def);
@@ -84,6 +79,7 @@ public class ServiceHero implements Service{
 	public LinkedList<Fire> getListFire() {
 		return listFire;
 	}
+	
 
 	@Override
 	public void fire(Vec2 positionHero) {
@@ -92,15 +88,14 @@ public class ServiceHero implements Service{
 		listFire.offerFirst(fire);
 	}
 	
+	
 	@Override
 	public void destroy() {
-		
 	}
 
 
 	@Override
 	public void collision() {	
-		
 	}
 
 
@@ -119,8 +114,6 @@ public class ServiceHero implements Service{
 			bomb(-20000.f);
 			munitionBomb.setMunitionMega(munitionBomb.getMunitionMega()-1);
 		}
-
-
 	}
 	
 	public void bomb(float factor) {
@@ -132,8 +125,6 @@ public class ServiceHero implements Service{
 				if((heroBody.getPosition().x-rangeRadius<b.getPosition().x) && (b.getPosition().x<heroBody.getPosition().x+rangeRadius)
 					&&	(heroBody.getPosition().y-rangeRadius<b.getPosition().y) && (b.getPosition().y<heroBody.getPosition().y+rangeRadius))
 				bodyList.add(b);
-			
-			
 		}
 		System.out.println(bodyList.size());
 		for(int i=0; i<bodyList.size();i++){

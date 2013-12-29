@@ -114,7 +114,7 @@ public class Level {
 	/**
 	 * Remove bonus when used
 	 **/
-	public static void refresh() {
+	public void refresh() {
 		for (int i = 0; i < listBonus.size(); i++) {
 			if(listBonus.get(i).getService().getUsed())
 				listBonus.remove(i);

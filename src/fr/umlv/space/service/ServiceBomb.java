@@ -9,8 +9,9 @@ import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
 
-import fr.umlv.collision.TypeObject;
+
 import fr.umlv.physics.CategoriesSpaceObject;
+import fr.umlv.physics.PhysicsEngine;
 
 public class ServiceBomb implements Service{
 	
@@ -21,6 +22,7 @@ public class ServiceBomb implements Service{
 	private Body bombBody; 
 	private TYPEBONUS type;
 	private boolean used;
+	private boolean collision;
 
 	/**
 	 * The constructor take a world, the position of the bomb in the world and his type
@@ -39,7 +41,7 @@ public class ServiceBomb implements Service{
 		BodyDef bodyDef = new  BodyDef();
 		bodyDef.type = BodyType.STATIC;
 		bodyDef.position = position;
-		bodyDef.userData = TypeObject.BOMB;
+		bodyDef.userData = this;
 		Body bomb = world.createBody(bodyDef);
 		PolygonShape polygon = new PolygonShape();
 		Vec2[] vertices = new Vec2[4];
@@ -53,8 +55,8 @@ public class ServiceBomb implements Service{
 		fixtureDef.density = 1f;
 		fixtureDef.shape = polygon;
 		fixtureDef.userData = this;
-		fixtureDef.filter.categoryBits = CategoriesSpaceObject.BONUS;
-		fixtureDef.filter.maskBits = CategoriesSpaceObject.HERO;
+		fixtureDef.filter.categoryBits = CategoriesSpaceObject.ENEMIS;
+		fixtureDef.filter.maskBits = CategoriesSpaceObject.PLANET | CategoriesSpaceObject.HERO;
 		bomb.createFixture(fixtureDef);
 		bomb.setLinearVelocity(new Vec2(0,2));
 		bomb.setLinearDamping(0);
@@ -89,20 +91,22 @@ public class ServiceBomb implements Service{
 
 	@Override
 	public boolean getFlagCollision() {
-		// TODO Auto-generated method stub
-		return false;
+		return collision;
 	}
 
 	@Override
 	public void collision() {
-		// TODO Auto-generated method stub
-		
+		collision=true;
+	}
+	@Override
+	public void setCollision(boolean c){
+		collision=c;
 	}
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
+		if(collision){
+			PhysicsEngine.getWorld().destroyBody(bombBody);
+		}	
 	}
-
 }

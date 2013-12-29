@@ -16,19 +16,20 @@ import fr.umlv.physics.PhysicsEngine;
 import fr.umlv.space.object.SpaceObject;
 import fr.umlv.space.object.SpaceShip;
 import fr.umlv.space.service.Service;
+import fr.umlv.space.service.Service.TYPEBONUS;
 import fr.umlv.space.service.ServiceHero;
 import fr.umlv.space.service.ServiceArmada;
 import fr.umlv.zen3.ApplicationContext;
 
 public class Game implements GameManager{
-	
+
 	/**
 	 * This class load all you need for your level
 	 * 
 	 **/
 
 	private final Level lvl;
-	
+
 	/**
 	 * The constructor take a level, 
 	 * @param Level, lvl load the level you have selected
@@ -45,7 +46,8 @@ public class Game implements GameManager{
 		int velocityIterations = 2;   //how strongly to correct velocity
 		int positionIterations = 2; 
 		Timer t = new Timer();
-		SpaceObject hero = new SpaceShip(new ServiceHero(PhysicsEngine.getWorld()));
+		ServiceHero sH = new ServiceHero(PhysicsEngine.getWorld());
+		SpaceObject hero = new SpaceShip(sH);
 		SpaceObject enemi = new SpaceShip(new ServiceArmada(PhysicsEngine.getWorld(),new Vec2(300,60)));
 		lvl.createPlanet(Parsor.parserXML("stage1.xml","planet"));
 		lvl.createBomb(Parsor.parserXML("stage1.xml","bomb"), Service.TYPEBONUS.BOMB);
@@ -60,7 +62,7 @@ public class Game implements GameManager{
 			GraphicsEngine.graphicClear(context);
 			GraphicsEngine.setBackground(context,Color.BLACK);
 			GraphicsEngine.drawSpaceObject(context,hero,hero.getService().getBody().getWorldCenter());
-			
+
 			// Print the planet of the world
 			for(int i=0;i<lvl.getListPlanet().size();i++){
 				GraphicsEngine.drawSpaceObject(context,lvl.getListPlanet().get(i),hero.getService().getBody().getWorldCenter());	
@@ -70,11 +72,11 @@ public class Game implements GameManager{
 			for(int i=0;i<lvl.getListBomb().size();i++){
 				GraphicsEngine.drawBomb(context,lvl.getListBomb().get(i),hero.getService().getBody().getWorldCenter());	
 			}
-			
+
 			//Print fire shoot
 			GraphicsEngine.drawFire(context, hero,hero.getService().getBody().getWorldCenter());
-			
-			
+
+
 			for(SpaceObject sp : enemi.getService().getListFantacin()){
 				PhysicsEngine.croiserBehavior(sp, hero);
 				GraphicsEngine.drawFire(context, sp,hero.getService().getBody().getWorldCenter());
@@ -82,22 +84,38 @@ public class Game implements GameManager{
 			}
 			GraphicsEngine.drawFire(context, enemi,hero.getService().getBody().getWorldCenter());
 			GraphicsEngine.drawSpaceObject(context, enemi, hero.getService().getBody().getWorldCenter());
-			
+
 			PhysicsEngine.croiserBehavior(enemi, hero);
-			
+
 			//Gestion de collision
 			enemi.getService().destroy();
 			for(SpaceObject sp : hero.getService().getListFire()){
 				sp.getService().destroy();
 			}
-			
+
 			for(SpaceObject sp : enemi.getService().getListFire()){
 				sp.getService().destroy();
 			}
-			
+
 			for(SpaceObject sp : enemi.getService().getListFantacin()){
 				sp.getService().destroy();
 			}
+
+			for(SpaceObject sp : lvl.getListBomb()){
+				if(sp.getService().getFlagCollision()){
+					if(hero.getService().getMunition().getMunitionBomb()==0 && hero.getService().getMunition().getMunitionMega()==0)
+						sp.getService().usedBonus(sH);
+					if(sp.getService().getType()==TYPEBONUS.BOMB && hero.getService().getMunition().getMunitionBomb() > hero.getService().getMunition().getMunitionMega())
+						sp.getService().usedBonus(sH);
+					if(sp.getService().getType()==TYPEBONUS.MEGA && hero.getService().getMunition().getMunitionMega() > hero.getService().getMunition().getMunitionBomb())
+						sp.getService().usedBonus(sH);
+					sp.getService().destroy();
+					sp.getService().setCollision(false);
+				}
+
+			}
+			lvl.refresh();
+			lvl.getListBomb();
 
 			KeyListener.listen(hero, context);
 			context.render(graphics -> {
