@@ -26,7 +26,6 @@ public class Menu {
 	public static void printMenu() {
 		
 		Application.run("MasterPilot", GameManager.WIDTH, GameManager.HEIGHT, context -> {
-
 			for(;;) {
 				try {
 					Thread.sleep(10);
@@ -49,16 +48,15 @@ public class Menu {
 				KeyboardEvent event = context.waitKeyboard();
 				if(event.getKey() == KeyboardKey.S){
 					Game g = new Game();
-					g.printPlay(context);
+					try {
+						g.printPlay(context);
+					} catch (Exception e) {
+					}
 				}
 				if(event.getKey() == KeyboardKey.E){
 					System.exit(0);
 				}
-
 			}
 		});
-
-
 	}
-
 }

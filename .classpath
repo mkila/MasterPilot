@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/home/sybille/Documents/Projet/MasterPilot/jbox2d-testbed-2.2.1.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/home/duke/workspace-lambda/MasterPilot/jbox2d-testbed-2.2.1.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/home/duke/workspace-lambda/MasterPilot/jdom-2.0.5-javadoc.jar"/>
+	<classpathentry kind="lib" path="/home/duke/workspace-lambda/MasterPilot/jdom-2.0.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
