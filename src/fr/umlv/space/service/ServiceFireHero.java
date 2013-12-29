@@ -7,17 +7,22 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
+
 import fr.umlv.physics.CategoriesSpaceObject;
+import fr.umlv.physics.PhysicsEngine;
 
 public class ServiceFireHero implements Service{
 
-private final Body missileBody;
+private Body missileBody;
+private boolean collision;
+
 	
 	public ServiceFireHero(World world,float angle, Vec2 shipPosition) {
 		missileBody=createBodyDef(world,angle,shipPosition);
 		Vec2 tmp = new Vec2(-(float)Math.sin(angle)*1000,
 				(float)Math.cos(angle)*1000);
 		missileBody.applyForceToCenter(tmp.mul(100));
+		collision =false;
 	}
 
 
@@ -61,5 +66,24 @@ private final Body missileBody;
 	@Override
 	public Body getBody() {
 		return missileBody;
+	}
+
+
+	@Override
+	public void destroy() {
+		if(collision)
+			PhysicsEngine.getWorld().destroyBody(missileBody);
+	}
+
+
+	@Override
+	public void collision() {
+		collision = true;
+	}
+
+
+	@Override
+	public boolean getFlagCollision() {
+		return collision;
 	}
 }

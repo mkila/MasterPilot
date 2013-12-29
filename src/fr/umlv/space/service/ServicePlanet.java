@@ -51,4 +51,25 @@ private final Body planetBody;
 		return this.planetBody.getPosition();
 	}
 
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void collision() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean getFlagCollision() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

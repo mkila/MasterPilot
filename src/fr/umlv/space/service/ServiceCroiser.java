@@ -19,6 +19,8 @@ public class ServiceCroiser implements Service  {
 	private final Body croiserBody;
 	private final LinkedList<Fire> listFire;
 	private int temporisator;
+	private boolean collision;
+	private int life;
 	
 	
 	public ServiceCroiser(World world,Vec2 position) {
@@ -26,6 +28,7 @@ public class ServiceCroiser implements Service  {
 		croiserBody.setAngularDamping(4f);
 		listFire = new LinkedList<Fire>();
 		temporisator = 0;
+		life=3;
 	}
 	
 	
@@ -89,13 +92,38 @@ public class ServiceCroiser implements Service  {
 	
 	@Override
 	public void fire(Vec2 positionHero) {
-		if(temporisator == 60){
+		if(temporisator == 60 && life>0){
 		Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
 			 croiserBody.getWorldCenter(),positionHero));
 		listFire.offerFirst(fire);
 		temporisator=0;
 		}
 		temporisator++;
+	}
+
+
+
+	@Override
+	public void destroy() {
+		if(collision){
+			collision=false;
+			life--;
+			if(life == 0)
+			PhysicsEngine.getWorld().destroyBody(croiserBody);
+		}
+	}
+
+
+	@Override
+	public void collision() {
+		collision=true;
+
+	}
+
+
+	@Override
+	public boolean getFlagCollision() {
+		return collision;
 	}
 
 }

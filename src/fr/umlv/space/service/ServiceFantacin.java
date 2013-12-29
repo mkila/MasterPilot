@@ -18,12 +18,15 @@ public class ServiceFantacin implements Service  {
 
 	private final Body fantacinBody;
 	private final LinkedList<Fire> listFire;
+	private boolean collision;
+	
 
 
 	public ServiceFantacin(World world,Vec2 position) {
 		fantacinBody=createBodyDef(world,position);
 		fantacinBody.setAngularDamping(4f);
 		listFire = new LinkedList<Fire>();
+		collision=false;
 	}
 
 
@@ -85,9 +88,32 @@ public class ServiceFantacin implements Service  {
 
 	@Override
 	public void fire(Vec2 positionHero) {
-			Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
+		if(!collision){
+		Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
 					fantacinBody.getWorldCenter(),positionHero));
 			listFire.offerFirst(fire);
+		}
+	}
+
+
+	@Override
+	public void destroy() {
+		if(collision){
+			PhysicsEngine.getWorld().destroyBody(fantacinBody);
+		}
+	}
+	
+	
+	@Override
+	public void collision() {
+		collision=true;
+	
+	}
+	
+	
+	@Override
+	public boolean getFlagCollision() {
+		return collision;
 	}
 
 }

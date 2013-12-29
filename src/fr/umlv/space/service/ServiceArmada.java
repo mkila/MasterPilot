@@ -13,6 +13,7 @@ import org.jbox2d.dynamics.World;
 import fr.umlv.physics.CategoriesSpaceObject;
 import fr.umlv.physics.PhysicsEngine;
 import fr.umlv.space.object.Fire;
+import fr.umlv.space.object.SpaceObject;
 import fr.umlv.space.object.SpaceShip;
 
 public class ServiceArmada implements Service {
@@ -21,6 +22,7 @@ public class ServiceArmada implements Service {
 	private final LinkedList<Fire> listFire;
 	private final LinkedList<SpaceShip> listFantacin;
 	private int temporisator;
+	private boolean collision;
 
 	public ServiceArmada(World world, Vec2 position) {
 		armadaBody = createBodyDef(world, position);
@@ -32,6 +34,7 @@ public class ServiceArmada implements Service {
 		}
 		listFire = new LinkedList<>();
 		temporisator = 0;
+		collision=false;
 	}
 
 	public Body createBodyDef(World world, Vec2 position) {
@@ -96,7 +99,7 @@ public class ServiceArmada implements Service {
 
 	@Override
 	public void fire(Vec2 positionHero) {
-		if (temporisator == 60) {
+		if (temporisator == 60 && collision==false) {
 			for (SpaceShip spaceShip : listFantacin) {
 				spaceShip.getService().fire(positionHero);
 			}
@@ -106,6 +109,30 @@ public class ServiceArmada implements Service {
 			temporisator = 0;
 		}
 		temporisator++;
+	}
+
+	@Override
+	public void destroy() {
+		if(collision){
+			PhysicsEngine.getWorld().destroyBody(armadaBody);
+			for (SpaceObject sp : listFantacin) {
+				sp.getService().collision();
+				sp.getService().destroy();
+			}
+		}
+	}
+
+
+	@Override
+	public void collision() {
+		collision=true;
+
+	}
+
+
+	@Override
+	public boolean getFlagCollision() {
+		return collision;
 	}
 
 }

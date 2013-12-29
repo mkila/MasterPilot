@@ -27,6 +27,9 @@ public interface Service{
 	}
 	
 	public Body getBody();
+	public boolean getFlagCollision();
+	public void collision();
+	public void destroy();
 	
 	
 }

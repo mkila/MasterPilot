@@ -21,6 +21,7 @@ public class ServiceHero implements Service{
 	private final LinkedList<Fire> listFire;
 	
 	
+	
 	public ServiceHero(World world) {
 		heroBody=createBodyDef(world);
 		listFire = new LinkedList<Fire>();
@@ -89,6 +90,26 @@ public class ServiceHero implements Service{
 		Fire fire=  new Fire(new ServiceFireHero(PhysicsEngine.getWorld(),
 				heroBody.getAngle(), heroBody.getWorldCenter()));
 		listFire.offerFirst(fire);
+	}
+
+
+	@Override
+	public void destroy() {
+		
+	}
+
+
+	@Override
+	public void collision() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean getFlagCollision() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }
