@@ -22,7 +22,8 @@ public class Level {
 	 * The structure of a level
 	 **/
 	private ArrayList<Planet> listPlanet;
-	private ArrayList<SpaceShip> listEnnemy;
+	private ArrayList<SpaceShip> listCroiser;
+	private ArrayList<SpaceShip> listTIE;
 	private static ArrayList<Bomb> listBonus;
 	private HashMap<Integer, Integer> coordinate;
 
@@ -32,17 +33,26 @@ public class Level {
 	 **/
 	public Level(){
 		listPlanet = new ArrayList<>();
-		listEnnemy = new ArrayList<>();
+		listCroiser = new ArrayList<>();
+		listTIE = new ArrayList<>();
 		listBonus = new ArrayList<Bomb>();
 		coordinate = new HashMap<>();
 	}
 	
 	/**
-	 * Get the list of the planet in the level
-	 * @return an arraylist of planet
+	 * Get the list of the Croiser in the level
+	 * @return an arraylist of Croiser
 	 **/
-	public ArrayList<SpaceShip> getListEnnemy() {
-		return listEnnemy;
+	public ArrayList<SpaceShip> getListCroiser() {
+		return listCroiser;
+	}
+	
+	/**
+	 * Get the list of the TIE in the level
+	 * @return an arraylist of TIE
+	 **/
+	public ArrayList<SpaceShip> getlistTIE() {
+		return listTIE;
 	}
 	
 	/**
@@ -105,16 +115,16 @@ public class Level {
 			choice = Random.GetIntRandom(0, 1);
 			switch(choice){
 			case 0:
-				listEnnemy.add(new SpaceShip(new ServiceTIE(PhysicsEngine.getWorld(), new Vec2(x, y))));
+				listTIE.add(new SpaceShip(new ServiceTIE(PhysicsEngine.getWorld(), new Vec2(x, y))));
 				break;
 			case 1:
-				listEnnemy.add(new SpaceShip(new ServiceCroiser(PhysicsEngine.getWorld(), new Vec2(x, y))));
+				listCroiser.add(new SpaceShip(new ServiceCroiser(PhysicsEngine.getWorld(), new Vec2(x, y))));
 				break;
 			}			
 		}
 	}
 	
-	/**
+	/**listEnnemy
 	 * Create the bomb of the world with it density
 	 * @param the density of bomb in the world
 	 **/
@@ -149,9 +159,13 @@ public class Level {
 			if(listBonus.get(i).getService().getUsed())
 				listBonus.remove(i);
 		}
-		for (int i = 0; i < listEnnemy.size(); i++) {
-			if(listEnnemy.get(0).getService().getFlagCollision())
-				listEnnemy.remove(i);
+		for (int i = 0; i < listCroiser.size(); i++) {
+			if(listCroiser.get(0).getService().getFlagCollision())
+				listCroiser.remove(i);
+		}
+		for (int i = 0; i < listTIE.size(); i++) {
+			if(listTIE.get(0).getService().getFlagCollision())
+				listTIE.remove(i);
 		}
 	}
 }

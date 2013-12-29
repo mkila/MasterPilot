@@ -96,12 +96,10 @@ public class ServiceHero implements Service{
 		this.collision();
 	}
 
-
 	@Override
 	public void collision() {	
 		collision=!collision;
 	}
-
 
 	@Override
 	public boolean getFlagCollision() {
@@ -109,7 +107,6 @@ public class ServiceHero implements Service{
 	}
 
 	public void explosion(){
-
 		if(munitionBomb.getMunitionBomb()>0){
 			bomb(50000.f);
 			munitionBomb.setMunitionBomb(munitionBomb.getMunitionBomb()-1);
@@ -130,7 +127,6 @@ public class ServiceHero implements Service{
 					&&	(heroBody.getPosition().y-rangeRadius<b.getPosition().y) && (b.getPosition().y<heroBody.getPosition().y+rangeRadius))
 				bodyList.add(b);
 		}
-		System.out.println(bodyList.size());
 		for(int i=0; i<bodyList.size();i++){
 			double diffX = bodyList.get(i).getPosition().x - heroBody.getPosition().x;
 			double diffY = bodyList.get(i).getPosition().y - heroBody.getPosition().y;
@@ -138,10 +134,7 @@ public class ServiceHero implements Service{
 			double normalizedX = diffX / distance;
 			double normalizedY = diffY / distance;
 			Vec2 force = new Vec2((float)normalizedX * factor, (float)normalizedY * factor);
-			bodyList.get(i).applyLinearImpulse(force.mul(5000), bodyList.get(i).getWorldCenter());
-			
+			bodyList.get(i).applyLinearImpulse(force.mul(5000), bodyList.get(i).getWorldCenter());	
 		}
-
 	}
-
 }
