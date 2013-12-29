@@ -107,11 +107,11 @@ public class ServiceHero implements Service{
 	public void explosion(){
 
 		if(munitionBomb.getMunitionBomb()>0){
-			bomb(20000.f);
+			bomb(50000.f);
 			munitionBomb.setMunitionBomb(munitionBomb.getMunitionBomb()-1);
 		}
 		if(munitionBomb.getMunitionMega()>0){
-			bomb(-20000.f);
+			bomb(-50000.f);
 			munitionBomb.setMunitionMega(munitionBomb.getMunitionMega()-1);
 		}
 	}
@@ -134,7 +134,7 @@ public class ServiceHero implements Service{
 			double normalizedX = diffX / distance;
 			double normalizedY = diffY / distance;
 			Vec2 force = new Vec2((float)normalizedX * factor, (float)normalizedY * factor);
-			bodyList.get(i).applyLinearImpulse(force, bodyList.get(i).getWorldCenter());
+			bodyList.get(i).applyLinearImpulse(force.mul(5000), bodyList.get(i).getWorldCenter());
 			
 		}
 
