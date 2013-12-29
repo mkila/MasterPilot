@@ -93,7 +93,7 @@ public class ServiceHero implements Service{
 	
 	@Override
 	public void destroy() {
-		
+		this.collision();
 	}
 
 
