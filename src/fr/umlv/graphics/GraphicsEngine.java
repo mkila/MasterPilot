@@ -24,6 +24,8 @@ public class GraphicsEngine {
 	public static int HEIGHT = 600;
 
 	public static void drawSpaceObject(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
+		if(object.getService().getFlagCollision())
+			return;
 		Fixture fixture = object.getService().getBody().getFixtureList();
 		if(fixture!=null){
 			switch (fixture.getShape().getType()) {
@@ -112,6 +114,8 @@ public class GraphicsEngine {
 	}
 
 	public static void drawTIE(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
+		if(object.getService().getFlagCollision())
+			return;
 		context.render(graphics -> {
 			graphics.translate(WIDTH/2 - heroPosition.x, HEIGHT/2 - heroPosition.y);
 			Graphics2D g=graphics;
