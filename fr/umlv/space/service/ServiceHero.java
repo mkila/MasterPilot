@@ -91,7 +91,8 @@ public class ServiceHero implements Service{
 				heroBody.getAngle(), heroBody.getWorldCenter()));
 		listFire.offerFirst(fire);
 	}
-	
+
+
 	@Override
 	public void destroy() {
 		
@@ -99,9 +100,12 @@ public class ServiceHero implements Service{
 
 
 	@Override
-	public void collision() {	
+	public void collision() {
+		// TODO Auto-generated method stub
 		
 	}
+
+
 
 
 	@Override

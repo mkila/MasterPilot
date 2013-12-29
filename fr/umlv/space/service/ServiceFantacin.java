@@ -9,23 +9,23 @@ import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.FixtureDef;
 import org.jbox2d.dynamics.World;
-
 import fr.umlv.physics.CategoriesSpaceObject;
 import fr.umlv.physics.PhysicsEngine;
 import fr.umlv.space.object.Fire;
 
-public class ServiceTIE implements Service {
 
-	private Body tieBody;
+public class ServiceFantacin implements Service  {
+
+	private final Body fantacinBody;
 	private final LinkedList<Fire> listFire;
-	private int temporisator;
 	private boolean collision;
+	
 
 
-	public ServiceTIE(World world,Vec2 position) {
-		tieBody=createBodyDef(world,position);
+	public ServiceFantacin(World world,Vec2 position) {
+		fantacinBody=createBodyDef(world,position);
+		fantacinBody.setAngularDamping(4f);
 		listFire = new LinkedList<Fire>();
-		temporisator = 0;
 		collision=false;
 	}
 
@@ -34,17 +34,16 @@ public class ServiceTIE implements Service {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(position.x, position.y);
-		def.angle = (float)Math.PI*3/2;
+		def.angle=0;
 
 
 
 		//Construction d'un triangle
 		PolygonShape spaceshipShape = new PolygonShape();
-		Vec2[] vertices = new Vec2[4];
+		Vec2[] vertices = new Vec2[3];
 		vertices[0] = new Vec2(0,0);
-		vertices[1] = new Vec2(0,35);
-		vertices[2] = new Vec2(35,0);
-		vertices[3] = new Vec2(35,35);
+		vertices[1] = new Vec2(10,20);
+		vertices[2] = new Vec2(20,0);
 		spaceshipShape.set(vertices, vertices.length);
 
 
@@ -67,20 +66,20 @@ public class ServiceTIE implements Service {
 
 	@Override
 	public Body getBody() {
-		return tieBody;
+		return fantacinBody;
 	}
 
 	public Vec2 getPosition() {
-		return this.tieBody.getPosition();
+		return this.fantacinBody.getWorldCenter();
 	}
 
 	public Vec2 getLinearVelocity() {
-		return this.tieBody.getLinearVelocity();
+		return this.fantacinBody.getLinearVelocity();
 	}
 
 	@Override
 	public void move(Vec2 implultion) {
-		tieBody.applyForceToCenter(implultion);
+		fantacinBody.applyForceToCenter(implultion);
 	}
 
 	@Override
@@ -90,33 +89,33 @@ public class ServiceTIE implements Service {
 
 	@Override
 	public void fire(Vec2 positionHero) {
-		if(temporisator == 60 && collision==false){
-			Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
-					tieBody.getWorldCenter(),positionHero));
+		if(!collision){
+		Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
+					fantacinBody.getWorldCenter(),positionHero));
 			listFire.offerFirst(fire);
-			temporisator=0;
 		}
-		temporisator++;
 	}
 
 
 	@Override
 	public void destroy() {
 		if(collision){
-			PhysicsEngine.getWorld().destroyBody(tieBody);
+			PhysicsEngine.getWorld().destroyBody(fantacinBody);
+			fantacinBody.setActive(false);
 		}
 	}
-
-
+	
+	
 	@Override
 	public void collision() {
 		collision=true;
-
+	
 	}
-
-
+	
+	
 	@Override
 	public boolean getFlagCollision() {
 		return collision;
 	}
+
 }

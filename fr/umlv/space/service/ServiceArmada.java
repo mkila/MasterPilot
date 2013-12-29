@@ -115,6 +115,7 @@ public class ServiceArmada implements Service {
 	public void destroy() {
 		if(collision){
 			PhysicsEngine.getWorld().destroyBody(armadaBody);
+			armadaBody.setActive(false);
 			for (SpaceObject sp : listFantacin) {
 				sp.getService().collision();
 				sp.getService().destroy();

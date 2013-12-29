@@ -5,10 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 
+
+
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
+
+
 
 import fr.umlv.space.object.Fire;
 import fr.umlv.space.object.SpaceObject;
@@ -137,6 +141,7 @@ public class GraphicsEngine {
 		});
 	}
 	
+
 	public static void drawTIE(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
 		if(object.getService().getFlagCollision())
 			return;
@@ -154,5 +159,4 @@ public class GraphicsEngine {
 
 		});
 	}
-
 }

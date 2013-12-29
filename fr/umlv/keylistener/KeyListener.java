@@ -29,14 +29,14 @@ public class KeyListener {
 				return;
 			}
 			if(event.getKey() == KeyboardKey.DOWN){
-				Vec2 tmp = new Vec2((-(float)Math.sin(hero.getService().getBody().getAngle()))*5000,
-						((float)Math.cos(hero.getService().getBody().getAngle()))*5000);
+				Vec2 tmp = new Vec2((-(float)Math.sin(hero.getService().getBody().getAngle()))*1000,
+						((float)Math.cos(hero.getService().getBody().getAngle()))*1000);
 				hero.getService().getBody().applyForceToCenter(tmp.mul(-500));
 
 			}
 			if(event.getKey() == KeyboardKey.UP){
-				Vec2 tmp = new Vec2((-(float)Math.sin(hero.getService().getBody().getAngle()))*5000,
-						((float)Math.cos(hero.getService().getBody().getAngle()))*5000);
+				Vec2 tmp = new Vec2((-(float)Math.sin(hero.getService().getBody().getAngle()))*1000,
+						((float)Math.cos(hero.getService().getBody().getAngle()))*1000);
 				hero.getService().getBody().applyForceToCenter(tmp.mul(500));
 
 			}
@@ -54,6 +54,8 @@ public class KeyListener {
 			if(event.getKey() == KeyboardKey.SPACE){
 				hero.getService().fire(null);
 			}
+			
+			
 
 			if(event.getKey() == KeyboardKey.B){
 				if(hero.getService().getMunition().getMunitionBomb()==0 && hero.getService().getMunition().getMunitionMega()==0){

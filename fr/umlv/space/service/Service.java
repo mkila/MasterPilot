@@ -25,12 +25,12 @@ public interface Service{
 	default public LinkedList<SpaceShip> getListFantacin(){
 		 throw new NotImplementedException();
 	}
-
-	default public Munition getMunition() {
-		throw new NotImplementedException();
+	
+	default public void fire(Vec2 positionHero){
+		 throw new NotImplementedException();
 	}
 
-	default public void fire(Vec2 positionHero){
+	default public Munition getMunition() {
 		throw new NotImplementedException();
 	}
 
