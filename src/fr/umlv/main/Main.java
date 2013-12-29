@@ -14,6 +14,7 @@ import fr.umlv.space.service.ServiceArmada;
 import fr.umlv.space.service.ServiceCroiser;
 import fr.umlv.space.service.ServiceHero;
 import fr.umlv.space.service.ServicePlanet;
+import fr.umlv.space.service.ServiceTIE;
 import fr.umlv.zen3.Application;
 
 public class Main {
@@ -50,7 +51,7 @@ public class Main {
 				GraphicsEngine.drawSpaceObject(context,hero,hero.getService().getBody().getWorldCenter());
 				GraphicsEngine.drawSpaceObject(context,planet1,hero.getService().getBody().getWorldCenter());
 				GraphicsEngine.drawSpaceObject(context,planet2,hero.getService().getBody().getWorldCenter());
-				//GraphicsEngine.drawTIE(context, enemiTIE, hero.getService().getBody().getWorldCenter());
+				//GraphicsEngine.drawTIE(context, enemi, hero.getService().getBody().getWorldCenter());
 				GraphicsEngine.drawFire(context, hero,hero.getService().getBody().getWorldCenter());
 				//GraphicsEngine.drawFire(context, enemiTIE,hero.getService().getBody().getWorldCenter());
 				GraphicsEngine.drawFire(context, enemi,hero.getService().getBody().getWorldCenter());
@@ -61,8 +62,22 @@ public class Main {
 					GraphicsEngine.drawSpaceObject(context, sp, hero.getService().getBody().getWorldCenter());
 				}
 				KeyListener.listen(hero, context);
-				//PhysicsEngine.tieBehavior(enemiTIE,hero.getService().getBody().getWorldCenter());
+				//PhysicsEngine.tieBehavior(enemi,hero.getService().getBody().getWorldCenter());
 				PhysicsEngine.croiserBehavior(enemi, hero);
+				
+				//Gestion de collision
+				enemi.getService().destroy();
+				for(SpaceObject sp : hero.getService().getListFire()){
+					sp.getService().destroy();
+				}
+				
+				for(SpaceObject sp : enemi.getService().getListFire()){
+					sp.getService().destroy();
+				}
+				
+				for(SpaceObject sp : enemi.getService().getListFantacin()){
+					sp.getService().destroy();
+				}
 			}
 		});
 		//Menu.printMenu();
