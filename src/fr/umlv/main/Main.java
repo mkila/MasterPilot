@@ -1,5 +1,6 @@
 package fr.umlv.main;
 
+import fr.umlv.main.Menu;
 
 public class Main {
 
@@ -9,7 +10,11 @@ public class Main {
 	 *
 	 **/
 	public static void main(String[] args) {
-		Menu.printMenu();
+		Menu m= new Menu();
+		if(args.length==0)
+			m.printMenu(null);
+		else
+			m.printMenu(args[1]);
 	}
 
 }

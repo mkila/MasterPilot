@@ -13,8 +13,19 @@ public class Parsor {
 	
 	/**
 	 * The class is used to parse Object to create a level.
+	 * @throws IOException 
+	 * @throws JDOMException 
 	 */
 	
+	public static void main(String[] args) throws JDOMException, IOException {
+		System.out.println(parserXML("stage1.xml","ennemi"));
+		int wave = parserWave("stage1.xml");
+		for(int i=0; i<wave;i++){
+			StringBuilder b = new StringBuilder("ennemi");
+			b.append(i+1);
+			System.out.println(parserXML("stage1.xml",b.toString()));
+		}
+	}
 	/**
 	 * Parse the custom XML file.
 	 * @param fileName the name of the file
@@ -37,5 +48,14 @@ public class Parsor {
 			density = (int) (Float.parseFloat(courant.getAttributeValue("total"))*Float.parseFloat(courant.getAttributeValue("density")));			
 		}
 		return density;
+	}
+	
+	public static int parserWave(String fileName) throws JDOMException, IOException{
+		SAXBuilder sxb = new SAXBuilder();
+		Document document;
+		document = sxb.build(new File(fileName));
+		Element racine = document.getRootElement();
+		int size = Integer.parseInt(racine.getChildText("wave"));
+		return size;
 	}
 }

@@ -9,9 +9,11 @@ import fr.umlv.main.Random;
 import fr.umlv.physics.PhysicsEngine;
 import fr.umlv.space.object.Bomb;
 import fr.umlv.space.object.Planet;
+import fr.umlv.space.object.SpaceShip;
 import fr.umlv.space.service.Service;
 import fr.umlv.space.service.ServiceBomb;
 import fr.umlv.space.service.ServicePlanet;
+import fr.umlv.space.service.ServiceTIE;
 
 public class Level {
 
@@ -19,6 +21,7 @@ public class Level {
 	 * The structure of a level
 	 **/
 	private ArrayList<Planet> listPlanet;
+	private ArrayList<SpaceShip> listEnnemy;
 	private static ArrayList<Bomb> listBonus;
 	private HashMap<Integer, Integer> coordinate;
 
@@ -28,8 +31,17 @@ public class Level {
 	 **/
 	public Level(){
 		listPlanet = new ArrayList<>();
+		listEnnemy = new ArrayList<>();
 		listBonus = new ArrayList<Bomb>();
 		coordinate = new HashMap<>();
+	}
+	
+	/**
+	 * Get the list of the planet in the level
+	 * @return an arraylist of planet
+	 **/
+	public ArrayList<SpaceShip> getListEnnemy() {
+		return listEnnemy;
 	}
 	
 	/**
@@ -84,6 +96,15 @@ public class Level {
 		}
 	}
 	
+	public void createEnnemy(int density){
+		int x,y;
+		for(int i=0;i<density;i++){
+			x = Random.GetIntRandom(0, 800);
+			y = Random.GetIntRandom(0, 800);
+				listEnnemy.add(new SpaceShip(new ServiceTIE(PhysicsEngine.getWorld(), new Vec2(x, y))));		
+		}
+	}
+	
 	/**
 	 * Create the bomb of the world with it density
 	 * @param the density of bomb in the world
@@ -118,6 +139,10 @@ public class Level {
 		for (int i = 0; i < listBonus.size(); i++) {
 			if(listBonus.get(i).getService().getUsed())
 				listBonus.remove(i);
+		}
+		for (int i = 0; i < listEnnemy.size(); i++) {
+			if(listEnnemy.get(0).getService().getFlagCollision())
+				listEnnemy.remove(i);
 		}
 	}
 }

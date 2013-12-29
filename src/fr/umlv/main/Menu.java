@@ -3,6 +3,8 @@ package fr.umlv.main;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.io.File;
+import java.util.ArrayList;
 
 import fr.umlv.zen3.Application;
 import fr.umlv.zen3.KeyboardEvent;
@@ -23,8 +25,27 @@ public class Menu {
 	 * Allow the selection of the level
 	 * 
 	 * */
-	public static void printMenu() {
+	ArrayList<String> level = new ArrayList<>();
+
+	public void printMenu(String fileName) {
 		
+		if(fileName == null){
+			String path = "."; 
+			String files;
+			File folder = new File(path);
+			File[] listOfFiles = folder.listFiles();
+			for (int i = 0; i < listOfFiles.length; i++){
+				if (listOfFiles[i].isFile()){
+					files = listOfFiles[i].getName();
+					if (files.endsWith(".xml")){
+						level.add(files);
+					}
+				}
+			}
+		}
+		else
+			level.add(fileName);
+
 		Application.run("MasterPilot", GameManager.WIDTH, GameManager.HEIGHT, context -> {
 			for(;;) {
 				try {
@@ -44,10 +65,10 @@ public class Menu {
 					graphics.drawString("Authors : Baulamon - Tran Master 1", 20,590);
 
 				});
-				
+
 				KeyboardEvent event = context.waitKeyboard();
 				if(event.getKey() == KeyboardKey.S){
-					Game g = new Game();
+					Game g = new Game(level);
 					try {
 						g.printPlay(context);
 					} catch (Exception e) {
