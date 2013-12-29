@@ -21,11 +21,13 @@ public class ServiceHero implements Service{
 	private final Body heroBody;
 	private final LinkedList<Fire> listFire;
 	private Munition munitionBomb;
+	private boolean collision;
 
 	public ServiceHero(World world) {
 		heroBody=createBodyDef(world);
 		listFire = new LinkedList<Fire>();
 		munitionBomb = new Munition(0, 15);
+		collision=false;
 	}
 
 	private Body createBodyDef(World world) {
@@ -91,17 +93,19 @@ public class ServiceHero implements Service{
 	
 	@Override
 	public void destroy() {
+		
 	}
 
 
 	@Override
 	public void collision() {	
+		collision=!collision;
 	}
 
 
 	@Override
 	public boolean getFlagCollision() {
-		return false;
+		return collision;
 	}
 
 	public void explosion(){

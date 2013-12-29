@@ -136,23 +136,37 @@ public class GraphicsEngine {
 			}
 		});
 	}
-	
-	public static void drawTIE(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
-		if(object.getService().getBody().isActive())
+/***
+ * Méthode qui dessine le bouclier en fonction des collision
+ * @param context
+ * @param hero
+ */
+	public static void drawBouclier(ApplicationContext context,SpaceObject hero){
+		if(hero.getService().getFlagCollision()){
+			context.render(graphics -> {
+				graphics.translate(WIDTH/2 - hero.getService().getBody().getWorldCenter().x, HEIGHT/2 - hero.getService().getBody().getWorldCenter().y);
+				Graphics2D g=graphics;
+				g.drawOval((int)hero.getService().getBody().getWorldCenter().x,(int)hero.getService().getBody().getWorldCenter().x, 60, 60);
+			});
+			hero.getService().collision();
+		}
+	}
+
+	public static void drawTIE(ApplicationContext context,SpaceObject hero,Vec2 heroPosition){
+		if(hero.getService().getBody().isActive())
 			return;
 		context.render(graphics -> {
 			graphics.translate(WIDTH/2 - heroPosition.x, HEIGHT/2 - heroPosition.y);
 			Graphics2D g=graphics;
 			//g.setColor(Color.BLUE);
 			AffineTransform rotation = new AffineTransform();
-			rotation.rotate(object.getService().getBody().getAngle(),22,17.5);
+			rotation.rotate(hero.getService().getBody().getAngle(),22,17.5);
 			int[] x = {5,10,15,30,35,40,35,30,15,10};
 			int[] y = {15,40,17,17,40,15,0,12,12,0};
-			g.translate(object.getService().getBody().getWorldCenter().x-22, object.getService().getBody().getWorldCenter().y-17.5);
+			g.translate(hero.getService().getBody().getWorldCenter().x-22, hero.getService().getBody().getWorldCenter().y-17.5);
 			g.transform(rotation);
 			graphics.fillPolygon(x, y, x.length);
 
 		});
 	}
-
 }
