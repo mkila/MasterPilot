@@ -73,6 +73,7 @@ private boolean collision;
 	public void destroy() {
 		if(collision)
 			PhysicsEngine.getWorld().destroyBody(missileBody);
+			missileBody.setActive(false);
 	}
 
 

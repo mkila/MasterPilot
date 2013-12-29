@@ -72,6 +72,7 @@ public class ServiceFireEnemi implements Service{
 	public void destroy() {
 		if(collision)
 			PhysicsEngine.getWorld().destroyBody(missileBody);
+			missileBody.setActive(false);
 	}
 
 

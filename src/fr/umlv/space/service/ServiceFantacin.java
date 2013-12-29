@@ -100,6 +100,7 @@ public class ServiceFantacin implements Service  {
 	public void destroy() {
 		if(collision){
 			PhysicsEngine.getWorld().destroyBody(fantacinBody);
+			fantacinBody.setActive(false);
 		}
 	}
 	

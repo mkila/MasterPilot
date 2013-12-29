@@ -104,6 +104,7 @@ public class ServiceTIE implements Service {
 	public void destroy() {
 		if(collision){
 			PhysicsEngine.getWorld().destroyBody(tieBody);
+			tieBody.setActive(false);
 		}
 	}
 

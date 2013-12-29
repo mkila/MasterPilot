@@ -108,8 +108,10 @@ public class ServiceCroiser implements Service  {
 		if(collision){
 			collision=false;
 			life--;
-			if(life == 0)
+			if(life == 0){
 			PhysicsEngine.getWorld().destroyBody(croiserBody);
+			croiserBody.setActive(false);
+			}
 		}
 	}
 

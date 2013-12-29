@@ -1,5 +1,6 @@
 package fr.umlv.physics;
 
+import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
@@ -43,8 +44,9 @@ public class PhysicsEngine {
 		return world;
 	}
 
+
 	public static void tieBehavior(SpaceObject tie, Vec2 positionHero) {
-		if(tie.getService().getBody()==null)
+		if(tie.getService().getBody().isActive())
 			return;
 		Vec2 tmp = new Vec2((-(float) Math.sin(tie.getService().getBody()
 				.getAngle())) * 1000, ((float) Math.cos(tie.getService()
@@ -64,16 +66,50 @@ public class PhysicsEngine {
 	}
 
 	public static void croiserBehavior(SpaceObject croiser, SpaceObject hero) {
-//		float angleDesire = (float) Math.tanh((hero.getService().getBody()
-//				.getWorldCenter().y - croiser.getService().getBody()
-//				.getWorldCenter().y)
-//				/ (hero.getService().getBody().getWorldCenter().x - croiser
-//						.getService().getBody().getWorldCenter().x)
-//				- Math.PI
-//				/ 2);
-//		float totalRotation = angleDesire -(croiser.getService().getBody().getAngle()% (float)Math.PI*2);
-//		croiser.getService().getBody()
-//				.applyTorque(totalRotation < 0 ? -5000000 : 5000000);
+		if(!croiser.getService().getBody().isActive())
+			return;
+		PolygonShape poly =	(PolygonShape)	croiser.getService().getBody().getFixtureList().getShape();
+			float distance1 = distance(croiser.getService().getBody().getWorldPoint(poly.getVertex(0)),hero.getService().getBody().getWorldCenter());
+			float distance2 = distance(croiser.getService().getBody().getWorldPoint(poly.getVertex(1)),hero.getService().getBody().getWorldCenter());
+			
+			if(distance1<distance2){
+				float time = 1; // one second
+				float torque = croiser.getService().getBody().getInertia() * (1 - hero.getService().getBody().getAngularVelocity() ) / time;
+				croiser.getService().getBody().applyTorque(torque);
+			}
+			
+			if(distance1>distance2){
+				float time = 1; // one second
+				float torque = croiser.getService().getBody().getInertia() * (-1 - hero.getService().getBody().getAngularVelocity() ) / time;
+				croiser.getService().getBody().applyTorque(torque);
+			}
+
+
+			Vec2 tmp2 = new Vec2(hero.getService().getBody().getWorldCenter().x
+				- croiser.getService().getBody().getWorldCenter().x, hero
+				.getService().getBody().getWorldCenter().y
+				- croiser.getService().getBody().getWorldCenter().y);
+		croiser.getService().getBody().applyForceToCenter(tmp2.mul(300));
+
+	}
+	public static void croiserFantacin(SpaceObject croiser, SpaceObject hero) {
+		if(!croiser.getService().getBody().isActive())
+			return;
+		PolygonShape poly =	(PolygonShape)	croiser.getService().getBody().getFixtureList().getShape();
+			float distance1 = distance(croiser.getService().getBody().getWorldPoint(poly.getVertex(0)),hero.getService().getBody().getWorldCenter());
+			float distance2 = distance(croiser.getService().getBody().getWorldPoint(poly.getVertex(2)),hero.getService().getBody().getWorldCenter());
+			
+			if(distance1>distance2){
+				float time = 1; // one second
+				float torque = croiser.getService().getBody().getInertia() * (1 - hero.getService().getBody().getAngularVelocity() ) / time;
+				croiser.getService().getBody().applyTorque(torque);
+			}
+			
+			if(distance1<distance2){
+				float time = 1; // one second
+				float torque = hero.getService().getBody().getInertia() * (-1 - hero.getService().getBody().getAngularVelocity() ) / time;
+				croiser.getService().getBody().applyTorque(torque);
+			}
 		Vec2 tmp2 = new Vec2(hero.getService().getBody().getWorldCenter().x
 				- croiser.getService().getBody().getWorldCenter().x, hero
 				.getService().getBody().getWorldCenter().y
@@ -82,4 +118,7 @@ public class PhysicsEngine {
 
 	}
 
+	private static float distance(Vec2 a, Vec2 b) {
+		return ((b.x-a.x)*(b.x-a.x))+((b.y-a.y)*(b.y-a.y));
+	}
 }
