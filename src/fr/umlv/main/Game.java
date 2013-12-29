@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.io.IOException;
 
 import org.jbox2d.common.Timer;
+import org.jbox2d.common.Vec2;
 import org.jdom2.JDOMException;
 
 import fr.umlv.graphics.GraphicsEngine;
@@ -16,6 +17,7 @@ import fr.umlv.space.object.SpaceObject;
 import fr.umlv.space.object.SpaceShip;
 import fr.umlv.space.service.Service;
 import fr.umlv.space.service.ServiceHero;
+import fr.umlv.space.service.ServiceArmada;
 import fr.umlv.zen3.ApplicationContext;
 
 public class Game implements GameManager{
@@ -44,6 +46,7 @@ public class Game implements GameManager{
 		int positionIterations = 2; 
 		Timer t = new Timer();
 		SpaceObject hero = new SpaceShip(new ServiceHero(PhysicsEngine.getWorld()));
+		SpaceObject enemi = new SpaceShip(new ServiceArmada(PhysicsEngine.getWorld(),new Vec2(300,60)));
 		lvl.createPlanet(Parsor.parserXML("stage1.xml","planet"));
 		lvl.createBomb(Parsor.parserXML("stage1.xml","bomb"), Service.TYPEBONUS.BOMB);
 		lvl.createBomb(Parsor.parserXML("stage1.xml","mega"), Service.TYPEBONUS.MEGA);
@@ -70,6 +73,31 @@ public class Game implements GameManager{
 			
 			//Print fire shoot
 			GraphicsEngine.drawFire(context, hero,hero.getService().getBody().getWorldCenter());
+			
+			
+			for(SpaceObject sp : enemi.getService().getListFantacin()){
+				PhysicsEngine.croiserBehavior(sp, hero);
+				GraphicsEngine.drawFire(context, sp,hero.getService().getBody().getWorldCenter());
+				GraphicsEngine.drawSpaceObject(context, sp, hero.getService().getBody().getWorldCenter());
+			}
+			GraphicsEngine.drawFire(context, enemi,hero.getService().getBody().getWorldCenter());
+			GraphicsEngine.drawSpaceObject(context, enemi, hero.getService().getBody().getWorldCenter());
+			
+			PhysicsEngine.croiserBehavior(enemi, hero);
+			
+			//Gestion de collision
+			enemi.getService().destroy();
+			for(SpaceObject sp : hero.getService().getListFire()){
+				sp.getService().destroy();
+			}
+			
+			for(SpaceObject sp : enemi.getService().getListFire()){
+				sp.getService().destroy();
+			}
+			
+			for(SpaceObject sp : enemi.getService().getListFantacin()){
+				sp.getService().destroy();
+			}
 
 			KeyListener.listen(hero, context);
 			context.render(graphics -> {

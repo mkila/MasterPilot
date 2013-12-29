@@ -11,9 +11,18 @@ import org.jdom2.input.SAXBuilder;
 
 public class Parsor {
 	
-	public static void main(String[] args) throws JDOMException, IOException {
-		System.out.println(parserXML("stage1.xml","planet"));
-	}
+	/**
+	 * The class is used to parse Object to create a level.
+	 */
+	
+	/**
+	 * Parse the custom XML file.
+	 * @param fileName the name of the file
+	 * @param typeObject the type of object to parse
+	 * @return the density of an object
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	
 	public static int parserXML(String fileName,String typeObject) throws JDOMException, IOException{
 		SAXBuilder sxb = new SAXBuilder();

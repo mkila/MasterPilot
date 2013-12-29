@@ -2,6 +2,7 @@ package fr.umlv.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 import java.util.LinkedList;
 
 import org.jbox2d.collision.shapes.CircleShape;
@@ -20,6 +21,8 @@ public class GraphicsEngine {
 	public static int HEIGHT = 600;
 
 	public static void drawSpaceObject(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
+		if(object.getService().getFlagCollision())
+			return;
 		Fixture fixture = object.getService().getBody().getFixtureList();
 		if(fixture!=null){
 			switch (fixture.getShape().getType()) {
@@ -37,6 +40,7 @@ public class GraphicsEngine {
 						for(Vec2 vertice : poly.getVertices()){
 							x[i]=(int) object.getService().getBody().getWorldPoint(vertice).x;
 							y[i]=(int) object.getService().getBody().getWorldPoint(vertice).y;
+							//graphics.drawOval(x[i], y[i], 5, 5);
 							i++;
 						}
 						graphics.fillPolygon(x, y, poly.getVertices().length);
@@ -130,6 +134,24 @@ public class GraphicsEngine {
 					graphics.setColor(Color.YELLOW);
 				graphics.fillPolygon(x, y, poly.getVertices().length);
 			}
+		});
+	}
+	
+	public static void drawTIE(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
+		if(object.getService().getFlagCollision())
+			return;
+		context.render(graphics -> {
+			graphics.translate(WIDTH/2 - heroPosition.x, HEIGHT/2 - heroPosition.y);
+			Graphics2D g=graphics;
+			//g.setColor(Color.BLUE);
+			AffineTransform rotation = new AffineTransform();
+			rotation.rotate(object.getService().getBody().getAngle(),22,17.5);
+			int[] x = {5,10,15,30,35,40,35,30,15,10};
+			int[] y = {15,40,17,17,40,15,0,12,12,0};
+			g.translate(object.getService().getBody().getWorldCenter().x-22, object.getService().getBody().getWorldCenter().y-17.5);
+			g.transform(rotation);
+			graphics.fillPolygon(x, y, x.length);
+
 		});
 	}
 

@@ -15,25 +15,43 @@ import fr.umlv.space.service.ServicePlanet;
 
 public class Level {
 
+	/**
+	 * The structure of a level
+	 **/
 	private ArrayList<Planet> listPlanet;
 	private static ArrayList<Bomb> listBonus;
 	private HashMap<Integer, Integer> coordinate;
 
-
+	/**
+	 * The constructor initialize his attributes
+	 * 
+	 **/
 	public Level(){
 		listPlanet = new ArrayList<>();
 		listBonus = new ArrayList<Bomb>();
 		coordinate = new HashMap<>();
 	}
-
+	
+	/**
+	 * Get the list of the planet in the level
+	 * @return an arraylist of planet
+	 **/
 	public ArrayList<Planet> getListPlanet() {
 		return listPlanet;
 	}
-
+	
+	/**
+	 * Get the list of the bomb in the level
+	 * @return an arraylist of bomb
+	 **/
 	public ArrayList<Bomb> getListBomb() {
 		return listBonus;
 	}
 
+	/**
+	 * Create the planete of the world with it density
+	 * @param the density of planet in the world
+	 **/
 	public void createPlanet(int density){
 		int radius;
 		int x,y;
@@ -65,7 +83,11 @@ public class Level {
 			}
 		}
 	}
-
+	
+	/**
+	 * Create the bomb of the world with it density
+	 * @param the density of bomb in the world
+	 **/
 	public void createBomb(int density,Service.TYPEBONUS type) {
 		int x,y;
 		for(int i=0;i<density;i++){
@@ -81,11 +103,17 @@ public class Level {
 			}
 		}
 	}
-
+	
+	/**
+	 * Clear the bonus when change level
+	 **/
 	public static void clearBonus() {
 		listBonus.clear();
 	}
-
+	
+	/**
+	 * Remove bonus when used
+	 **/
 	public static void refresh() {
 		for (int i = 0; i < listBonus.size(); i++) {
 			if(listBonus.get(i).getService().getUsed())

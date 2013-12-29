@@ -13,19 +13,31 @@ import fr.umlv.collision.TypeObject;
 import fr.umlv.physics.CategoriesSpaceObject;
 
 public class ServiceBomb implements Service{
+	
+	/**
+	 * This class is used for the bomb implementation in game.
+	 **/
 
 	private Body bombBody; 
 	private TYPEBONUS type;
 	private boolean used;
 
+	/**
+	 * The constructor take a world, the position of the bomb in the world and his type
+	 * @param World world,Vec2 position,TYPEBONUS type
+	 **/
 	public ServiceBomb(World world,Vec2 position,TYPEBONUS type) {
 		bombBody = createBodyDef(world,position,type);
 	}
 
+	/**
+	 * Create the body and fixture of the bomb
+	 * @param World world,Vec2 position,TYPEBONUS type
+	 **/
 	private Body createBodyDef(World world,Vec2 position,TYPEBONUS type){
 		this.used = false;
 		BodyDef bodyDef = new  BodyDef();
-		bodyDef.type = BodyType.DYNAMIC;
+		bodyDef.type = BodyType.STATIC;
 		bodyDef.position = position;
 		bodyDef.userData = TypeObject.BOMB;
 		Body bomb = world.createBody(bodyDef);
@@ -73,6 +85,24 @@ public class ServiceBomb implements Service{
 		if(this.type == TYPEBONUS.MEGA)
 			hero.getMunition().setMunitionMega(hero.getMunition().getMunitionMega() + 1);
 		this.used = true;
+	}
+
+	@Override
+	public boolean getFlagCollision() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void collision() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

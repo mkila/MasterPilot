@@ -6,6 +6,7 @@ import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 
 import fr.umlv.space.object.Fire;
+import fr.umlv.space.object.SpaceShip;
 import fr.umlv.space.object.munition.Munition;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
@@ -20,12 +21,16 @@ public interface Service{
 	default public LinkedList<Fire> getListFire(){
 		throw new NotImplementedException();
 	}
+	
+	default public LinkedList<SpaceShip> getListFantacin(){
+		 throw new NotImplementedException();
+	}
 
 	default public Munition getMunition() {
 		throw new NotImplementedException();
 	}
 
-	default public void fire(){
+	default public void fire(Vec2 positionHero){
 		throw new NotImplementedException();
 	}
 
@@ -40,11 +45,14 @@ public interface Service{
 	default public boolean getUsed() {
 		throw new NotImplementedException();
 	}
-
-	public Body getBody();
-
+	
 	default public void explosion(){
 		throw new NotImplementedException();
 	};
+
+	public Body getBody();
+	public boolean getFlagCollision();
+	public void collision();
+	public void destroy();
 
 }

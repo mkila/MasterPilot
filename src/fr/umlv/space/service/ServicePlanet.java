@@ -19,7 +19,7 @@ private final Body planetBody;
 	}
 	
 	
-	private Body createBodyDef(World world,float radius,Vec2 position) {
+	public Body createBodyDef(World world,float radius,Vec2 position) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.STATIC;
 		def.position.set(position.x, position.y);
@@ -37,7 +37,7 @@ private final Body planetBody;
 		fixture.shape =planetShape;
 		fixture.userData=this;
 		fixture.filter.categoryBits=CategoriesSpaceObject.PLANET;
-		fixture.filter.maskBits = CategoriesSpaceObject.HERO;
+		fixture.filter.maskBits = CategoriesSpaceObject.HERO | CategoriesSpaceObject.ENEMIS;
 		planetSpace.createFixture(fixture);
 		return planetSpace;
 	}
@@ -49,6 +49,27 @@ private final Body planetBody;
 	
 	public Vec2 getPosition() {
 		return this.planetBody.getPosition();
+	}
+
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void collision() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean getFlagCollision() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

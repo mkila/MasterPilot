@@ -13,7 +13,15 @@ import fr.umlv.zen3.KeyboardKey;
 
 public class KeyListener {
 
-
+	/**
+	 * This class drawn hero movements and actions
+	 */
+	
+	/**
+	 * Allow to wait and perform an action
+	 * @param hero, the SpaceShipHero used to perfrom action
+	 * @param context, use for the keyboard event
+	 */
 	public static void listen(SpaceObject hero, ApplicationContext context) {
 		context.render(graphics -> {
 			KeyboardEvent event = context.pollKeyboard();
@@ -44,10 +52,10 @@ public class KeyListener {
 			}
 
 			if(event.getKey() == KeyboardKey.SPACE){
-				hero.getService().fire();
+				hero.getService().fire(null);
 			}
 
-			if(event.getKey() == KeyboardKey.Q){
+			if(event.getKey() == KeyboardKey.B){
 				if(hero.getService().getMunition().getMunitionBomb()==0 && hero.getService().getMunition().getMunitionMega()==0){
 					graphics.setColor(Color.RED);
 					graphics.setFont(new Font("Courrier", Font.BOLD, 50));
@@ -55,7 +63,6 @@ public class KeyListener {
 				}
 				hero.getService().explosion();
 			}
-
 		});
 	}
 }

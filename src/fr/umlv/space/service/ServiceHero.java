@@ -86,10 +86,27 @@ public class ServiceHero implements Service{
 	}
 
 	@Override
-	public void fire() {
-		Fire fire=  new Fire(new ServiceFire(PhysicsEngine.getWorld(),
+	public void fire(Vec2 positionHero) {
+		Fire fire=  new Fire(new ServiceFireHero(PhysicsEngine.getWorld(),
 				heroBody.getAngle(), heroBody.getWorldCenter()));
 		listFire.offerFirst(fire);
+	}
+	
+	@Override
+	public void destroy() {
+		
+	}
+
+
+	@Override
+	public void collision() {	
+		
+	}
+
+
+	@Override
+	public boolean getFlagCollision() {
+		return false;
 	}
 
 	public void explosion(){
