@@ -11,6 +11,7 @@ import fr.umlv.space.object.Bomb;
 import fr.umlv.space.object.Planet;
 import fr.umlv.space.object.SpaceShip;
 import fr.umlv.space.service.Service;
+import fr.umlv.space.service.ServiceArmada;
 import fr.umlv.space.service.ServiceBomb;
 import fr.umlv.space.service.ServiceCroiser;
 import fr.umlv.space.service.ServicePlanet;
@@ -24,6 +25,7 @@ public class Level {
 	private ArrayList<Planet> listPlanet;
 	private ArrayList<SpaceShip> listCroiser;
 	private ArrayList<SpaceShip> listTIE;
+	private ArrayList<SpaceShip> listArmada;
 	private static ArrayList<Bomb> listBonus;
 	private HashMap<Integer, Integer> coordinate;
 
@@ -35,6 +37,7 @@ public class Level {
 		listPlanet = new ArrayList<>();
 		listCroiser = new ArrayList<>();
 		listTIE = new ArrayList<>();
+		listArmada = new ArrayList<>();
 		listBonus = new ArrayList<Bomb>();
 		coordinate = new HashMap<>();
 	}
@@ -53,6 +56,14 @@ public class Level {
 	 **/
 	public ArrayList<SpaceShip> getlistTIE() {
 		return listTIE;
+	}
+	
+	/**
+	 * Get the list of the Armada in the level
+	 * @return an arraylist of Armada
+	 **/
+	public ArrayList<SpaceShip> getlistArmada() {
+		return listArmada;
 	}
 	
 	/**
@@ -112,13 +123,16 @@ public class Level {
 		for(int i=0;i<density;i++){
 			x = Random.GetIntRandom(0, 800);
 			y = Random.GetIntRandom(0, 800);
-			choice = Random.GetIntRandom(0, 1);
+			choice = Random.GetIntRandom(0, 2);
 			switch(choice){
 			case 0:
 				listTIE.add(new SpaceShip(new ServiceTIE(PhysicsEngine.getWorld(), new Vec2(x, y))));
 				break;
 			case 1:
 				listCroiser.add(new SpaceShip(new ServiceCroiser(PhysicsEngine.getWorld(), new Vec2(x, y))));
+				break;
+			case 2:
+				listArmada.add(new SpaceShip(new ServiceArmada(PhysicsEngine.getWorld(), new Vec2(x, y))));
 				break;
 			}			
 		}
@@ -152,7 +166,7 @@ public class Level {
 	}
 	
 	/**
-	 * Remove bonus when used
+	 * Remove Object when get collision
 	 **/
 	public void refresh() {
 		for (int i = 0; i < listBonus.size(); i++) {
@@ -166,6 +180,11 @@ public class Level {
 		for (int i = 0; i < listTIE.size(); i++) {
 			if(listTIE.get(0).getService().getFlagCollision())
 				listTIE.remove(i);
+		}
+		
+		for (int i = 0; i < listArmada.size(); i++) {
+			if(listArmada.get(0).getService().getFlagCollision())
+				listArmada.remove(i);
 		}
 	}
 }

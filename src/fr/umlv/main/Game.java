@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.jbox2d.common.Timer;
-import org.jbox2d.common.Vec2;
 import org.jdom2.JDOMException;
 
 import fr.umlv.graphics.GraphicsEngine;
@@ -93,7 +92,7 @@ public class Game implements GameManager{
 						GraphicsEngine.drawSpaceObject(context, lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());        
 						GraphicsEngine.drawFire(context, lvl.getlistTIE().get(i1),hero.getService().getBody().getWorldCenter());
 						lvl.getlistTIE().get(i1).getService().fire(hero.getService().getBody().getPosition());
-						PhysicsEngine.tieBehavior(lvl.getlistTIE().get(i1), hero.getService().getBody().getPosition());
+						PhysicsEngine.tieBehavior(lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());
 					}
 					
 					for(int i1=0;i1<lvl.getListCroiser().size();i1++){
@@ -101,6 +100,18 @@ public class Game implements GameManager{
 						GraphicsEngine.drawFire(context, lvl.getListCroiser().get(i1),hero.getService().getBody().getWorldCenter());
 						lvl.getListCroiser().get(i1).getService().fire(hero.getService().getBody().getPosition());
 						PhysicsEngine.croiserBehavior(lvl.getListCroiser().get(i1), hero);
+					}
+					
+					for(int i1=0;i1<lvl.getlistArmada().size();i1++){
+						GraphicsEngine.drawSpaceObject(context, lvl.getlistArmada().get(i1), hero.getService().getBody().getWorldCenter());        
+						GraphicsEngine.drawFire(context, lvl.getlistArmada().get(i1),hero.getService().getBody().getWorldCenter());
+						lvl.getlistArmada().get(i1).getService().fire(hero.getService().getBody().getPosition());
+						PhysicsEngine.croiserBehavior(lvl.getlistArmada().get(i1), hero);
+						for(SpaceObject sp : lvl.getlistArmada().get(i1).getService().getListFantacin()){
+							PhysicsEngine.croiserBehavior(sp, hero);
+							GraphicsEngine.drawFire(context, sp,hero.getService().getBody().getWorldCenter());
+							GraphicsEngine.drawSpaceObject(context, sp, hero.getService().getBody().getWorldCenter());
+						}
 					}
 					
 					//Print fire shoot
@@ -153,11 +164,13 @@ public class Game implements GameManager{
 						graphics.setColor(Color.GRAY);
 						graphics.drawString("Stage "+(lv+1),10,20);
 						graphics.drawString("Wave "+(w+1),10,40);
-						graphics.drawString("Ennemies left: "+(lvl.getlistTIE().size()+lvl.getListCroiser().size()),10,60);
+						graphics.drawString("Ennemies left: "+(lvl.getlistTIE().size()+lvl.getListCroiser().size()+
+								lvl.getlistArmada().size()),10,60);
 					});
 
 					// Finish the stage
-					if(lvl.getlistTIE().size()+lvl.getListCroiser().size() == 0 && stageName.size()==i+1 && wave==j+1){
+					if(lvl.getlistTIE().size()+lvl.getListCroiser().size()+lvl.getlistArmada().size() == 0
+							&& stageName.size()==i+1 && wave==j+1){
 						end = t.getMilliseconds()/1000;
 						float tot = end-start;
 						context.render(graphics -> {
@@ -180,7 +193,7 @@ public class Game implements GameManager{
 						break;
 					}
 					// Finish the wave
-					if(lvl.getlistTIE().size()+lvl.getListCroiser().size()==0){
+					if(lvl.getlistTIE().size()+lvl.getListCroiser().size()+lvl.getlistArmada().size()==0){
 						break;
 					}
 				}
