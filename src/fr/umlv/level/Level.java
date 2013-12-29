@@ -12,6 +12,7 @@ import fr.umlv.space.object.Planet;
 import fr.umlv.space.object.SpaceShip;
 import fr.umlv.space.service.Service;
 import fr.umlv.space.service.ServiceBomb;
+import fr.umlv.space.service.ServiceCroiser;
 import fr.umlv.space.service.ServicePlanet;
 import fr.umlv.space.service.ServiceTIE;
 
@@ -97,11 +98,19 @@ public class Level {
 	}
 	
 	public void createEnnemy(int density){
-		int x,y;
+		int x,y,choice;
 		for(int i=0;i<density;i++){
 			x = Random.GetIntRandom(0, 800);
 			y = Random.GetIntRandom(0, 800);
-				listEnnemy.add(new SpaceShip(new ServiceTIE(PhysicsEngine.getWorld(), new Vec2(x, y))));		
+			choice = Random.GetIntRandom(0, 1);
+			switch(choice){
+			case 0:
+				listEnnemy.add(new SpaceShip(new ServiceTIE(PhysicsEngine.getWorld(), new Vec2(x, y))));
+				break;
+			case 1:
+				listEnnemy.add(new SpaceShip(new ServiceCroiser(PhysicsEngine.getWorld(), new Vec2(x, y))));
+				break;
+			}			
 		}
 	}
 	
