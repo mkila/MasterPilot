@@ -71,9 +71,10 @@ private boolean collision;
 
 	@Override
 	public void destroy() {
-		if(collision)
+		if(collision){
 			PhysicsEngine.getWorld().destroyBody(missileBody);
 			missileBody.setActive(false);
+		}
 	}
 
 

@@ -41,8 +41,8 @@ public class ServiceFantacin implements Service  {
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[3];
 		vertices[0] = new Vec2(0,0);
-		vertices[1] = new Vec2(10,20);
-		vertices[2] = new Vec2(20,0);
+		vertices[1] = new Vec2(5,8.7f);
+		vertices[2] = new Vec2(10,0);
 		spaceshipShape.set(vertices, vertices.length);
 
 

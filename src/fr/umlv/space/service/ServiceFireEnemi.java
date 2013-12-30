@@ -22,6 +22,7 @@ public class ServiceFireEnemi implements Service{
 		Vec2 tmp = new Vec2(positionHero.x-shipPosition.x,
 				positionHero.y-shipPosition.y);
 		missileBody.applyForceToCenter(tmp.mul(1000));
+		missileBody.setActive(true);
 		collision =false;
 	}
 
@@ -70,16 +71,16 @@ public class ServiceFireEnemi implements Service{
 
 	@Override
 	public void destroy() {
-		if(collision)
+		if(collision){
 			PhysicsEngine.getWorld().destroyBody(missileBody);
 			missileBody.setActive(false);
+		}
 	}
 
 
 	@Override
 	public void collision() {
 		collision = true;
-
 	}
 
 
