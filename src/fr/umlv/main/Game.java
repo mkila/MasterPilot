@@ -77,7 +77,7 @@ public class Game implements GameManager{
 					GraphicsEngine.graphicClear(context);
 					GraphicsEngine.setBackground(context,Color.BLACK);
 					GraphicsEngine.drawSpaceObject(context,hero,hero.getService().getBody().getWorldCenter());
-
+					GraphicsEngine.drawBouclier(context, hero);
 					// Print the planet of the world
 					for(int i1=0;i1<lvl.getListPlanet().size();i1++){
 						GraphicsEngine.drawSpaceObject(context,lvl.getListPlanet().get(i1),hero.getService().getBody().getWorldCenter());        
@@ -89,10 +89,15 @@ public class Game implements GameManager{
 					}
 
 					for(int i1=0;i1<lvl.getlistTIE().size();i1++){
-						GraphicsEngine.drawSpaceObject(context, lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());        
+						//GraphicsEngine.drawSpaceObject(context, lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());        
+						GraphicsEngine.drawTIE(context, lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());        
 						GraphicsEngine.drawFire(context, lvl.getlistTIE().get(i1),hero.getService().getBody().getWorldCenter());
 						lvl.getlistTIE().get(i1).getService().fire(hero.getService().getBody().getPosition());
 						PhysicsEngine.tieBehavior(lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());
+						lvl.getlistTIE().get(i1).getService().destroy();
+						for(SpaceObject sp1 : lvl.getlistTIE().get(i1).getService().getListFire()){
+							sp1.getService().destroy();
+						}
 					}
 					
 					for(int i1=0;i1<lvl.getListCroiser().size();i1++){
@@ -100,6 +105,10 @@ public class Game implements GameManager{
 						GraphicsEngine.drawFire(context, lvl.getListCroiser().get(i1),hero.getService().getBody().getWorldCenter());
 						lvl.getListCroiser().get(i1).getService().fire(hero.getService().getBody().getPosition());
 						PhysicsEngine.croiserBehavior(lvl.getListCroiser().get(i1), hero);
+						for(SpaceObject sp1 : lvl.getListCroiser().get(i1).getService().getListFire()){
+							sp1.getService().destroy();
+						}
+						lvl.getListCroiser().get(i1).getService().destroy();
 					}
 					
 					for(int i1=0;i1<lvl.getlistArmada().size();i1++){
@@ -107,10 +116,18 @@ public class Game implements GameManager{
 						GraphicsEngine.drawFire(context, lvl.getlistArmada().get(i1),hero.getService().getBody().getWorldCenter());
 						lvl.getlistArmada().get(i1).getService().fire(hero.getService().getBody().getPosition());
 						PhysicsEngine.croiserBehavior(lvl.getlistArmada().get(i1), hero);
+						lvl.getlistArmada().get(i1).getService().destroy();
+						for(SpaceObject sp1 : lvl.getlistArmada().get(i1).getService().getListFire()){
+							sp1.getService().destroy();
+						}
 						for(SpaceObject sp : lvl.getlistArmada().get(i1).getService().getListFantacin()){
 							PhysicsEngine.croiserBehavior(sp, hero);
 							GraphicsEngine.drawFire(context, sp,hero.getService().getBody().getWorldCenter());
 							GraphicsEngine.drawSpaceObject(context, sp, hero.getService().getBody().getWorldCenter());
+							sp.getService().destroy();
+							for(SpaceObject sp1 : sp.getService().getListFire()){
+								sp1.getService().destroy();
+							}
 						}
 					}
 					
@@ -122,9 +139,10 @@ public class Game implements GameManager{
 //					for(SpaceObject sp : lvl.getListEnnemy().get(i1).getService().getListFire()){
 //						sp.getService().destroy();
 //					} 
-//					for(SpaceObject sp : hero.getService().getListFire()){
-//						sp.getService().destroy();
-//					}
+					
+					for(SpaceObject sp : hero.getService().getListFire()){
+						sp.getService().destroy();
+					}
 
 					// Manage the way of getting bomb
 					for(SpaceObject sp : lvl.getListBomb()){
@@ -163,7 +181,7 @@ public class Game implements GameManager{
 						graphics.drawString("Mega: "+hero.getService().getMunition().getMunitionMega(),675,60);
 						graphics.setColor(Color.GRAY);
 						graphics.drawString("Stage "+(lv+1),10,20);
-						graphics.drawString("Wave "+(w+1),10,40);
+						//graphics.drawString("Wave "+(w+1),10,40);
 						graphics.drawString("Ennemies left: "+(lvl.getlistTIE().size()+lvl.getListCroiser().size()+
 								lvl.getlistArmada().size()),10,60);
 					});
@@ -177,7 +195,7 @@ public class Game implements GameManager{
 							graphics.clearRect(0, 0, WIDTH, HEIGHT);
 							graphics.setColor(Color.RED);
 							graphics.setFont(new Font("Courrier", Font.BOLD, 30));
-							graphics.drawString("Stage CLEAR in "+String.format("%1.0f",tot)+" seconds", 30,200);
+							//graphics.drawString("Stage CLEAR in "+String.format("%1.0f",tot)+" seconds", 30,200);
 							graphics.drawString("(Press E to exit)", 30,250);
 
 						});
