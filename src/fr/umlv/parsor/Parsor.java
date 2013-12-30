@@ -10,7 +10,7 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 public class Parsor {
-	
+
 	/**
 	 * The class is used to parse Object to create a level.
 	 * @throws IOException 
@@ -39,7 +39,7 @@ public class Parsor {
 		}
 		return density;
 	}
-	
+
 	/**
 	 * Retrieve the number of waves for a stage
 	 * @param fileName the name of the file
@@ -54,5 +54,26 @@ public class Parsor {
 		Element racine = document.getRootElement();
 		int size = Integer.parseInt(racine.getChildText("wave"));
 		return size;
+	}
+	/**
+	 * Get the range to create object
+	 * @param fileName, the name of the file
+	 * @param typeRange, the type of range to parse
+	 * @return lower and upper range
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+	public static int[] parserRange(String fileName,String typeRange) throws JDOMException, IOException{
+		SAXBuilder sxb = new SAXBuilder();
+		Document document;
+		document = sxb.build(new File(fileName));
+		Element racine = document.getRootElement();
+		Iterator<Element> object = racine.getChildren(typeRange).iterator();
+		Element courant;
+		int[] tab = new int[2];
+		courant=object.next();
+		tab[0] = Integer.parseInt(courant.getAttributeValue("lower"));
+		tab[1] = Integer.parseInt(courant.getAttributeValue("upper"));
+		return tab;
 	}
 }

@@ -53,19 +53,22 @@ public class Game implements GameManager{
 		float end;
 		ServiceHero sH = new ServiceHero(PhysicsEngine.getWorld());
 		SpaceObject hero = new SpaceShip(sH);
-
+		int[] range = new int[2];
 		// Perform stage
 		for(int i=0;i<stageName.size();i++){
 			File f = new File(stageName.get(i));
-			lvl.createPlanet(Parsor.parserXML(f.toString(),"planet"));
-			lvl.createBomb(Parsor.parserXML(f.toString(),"bomb"), Service.TYPEBONUS.BOMB);
-			lvl.createBomb(Parsor.parserXML(f.toString(),"mega"), Service.TYPEBONUS.MEGA);
+			range = Parsor.parserRange(f.toString(),"planetRange");
+			lvl.createPlanet(Parsor.parserXML(f.toString(),"planet"),range[0],range[1]);
+			range = Parsor.parserRange(f.toString(),"bombRange");
+			lvl.createBomb(Parsor.parserXML(f.toString(),"bomb"), Service.TYPEBONUS.BOMB,range[0],range[1]);
+			lvl.createBomb(Parsor.parserXML(f.toString(),"mega"), Service.TYPEBONUS.MEGA,range[0],range[1]);
 			int wave = Parsor.parserWave(f.toString());
 			// Perform wave
 			for(int j=0;j<wave;j++){
 				StringBuilder s = new StringBuilder("ennemi");
 				s.append(j+1);
-				lvl.createEnnemy(Parsor.parserXML(f.toString(),s.toString()));
+				range = Parsor.parserRange(f.toString(),"ennemiRange");
+				lvl.createEnnemy(Parsor.parserXML(f.toString(),s.toString()),range[0],range[1]);
 				for(;;){
 					try {
 						Thread.sleep(10);
@@ -103,10 +106,10 @@ public class Game implements GameManager{
 						GraphicsEngine.drawFire(context, lvl.getListCroiser().get(i1),hero.getService().getBody().getWorldCenter());
 						lvl.getListCroiser().get(i1).getService().fire(hero.getService().getBody().getPosition());
 						PhysicsEngine.croiserBehavior(lvl.getListCroiser().get(i1), hero);
-//						for(SpaceObject sp1 : lvl.getListCroiser().get(i1).getService().getListFire()){
-//							sp1.getService().destroy();
-//						}
-//						lvl.getListCroiser().get(i1).getService().destroy();
+						for(SpaceObject sp1 : lvl.getListCroiser().get(i1).getService().getListFire()){
+							sp1.getService().destroy();
+						}
+						//lvl.getListCroiser().get(i1).getService().destroy();
 					}
 					
 					for(int i1=0;i1<lvl.getlistArmada().size();i1++){

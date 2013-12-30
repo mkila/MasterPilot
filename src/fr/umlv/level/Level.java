@@ -26,7 +26,7 @@ public class Level {
 	private ArrayList<SpaceShip> listCroiser;
 	private ArrayList<SpaceShip> listTIE;
 	private ArrayList<SpaceShip> listArmada;
-	private static ArrayList<Bomb> listBonus;
+	private ArrayList<Bomb> listBonus;
 	private HashMap<Integer, Integer> coordinate;
 
 	/**
@@ -38,10 +38,10 @@ public class Level {
 		listCroiser = new ArrayList<>();
 		listTIE = new ArrayList<>();
 		listArmada = new ArrayList<>();
-		listBonus = new ArrayList<Bomb>();
+		listBonus = new ArrayList<>();
 		coordinate = new HashMap<>();
 	}
-	
+
 	/**
 	 * Get the list of the Croiser in the level
 	 * @return an arraylist of Croiser
@@ -49,7 +49,7 @@ public class Level {
 	public ArrayList<SpaceShip> getListCroiser() {
 		return listCroiser;
 	}
-	
+
 	/**
 	 * Get the list of the TIE in the level
 	 * @return an arraylist of TIE
@@ -57,7 +57,7 @@ public class Level {
 	public ArrayList<SpaceShip> getlistTIE() {
 		return listTIE;
 	}
-	
+
 	/**
 	 * Get the list of the Armada in the level
 	 * @return an arraylist of Armada
@@ -65,7 +65,7 @@ public class Level {
 	public ArrayList<SpaceShip> getlistArmada() {
 		return listArmada;
 	}
-	
+
 	/**
 	 * Get the list of the planet in the level
 	 * @return an arraylist of planet
@@ -73,7 +73,7 @@ public class Level {
 	public ArrayList<Planet> getListPlanet() {
 		return listPlanet;
 	}
-	
+
 	/**
 	 * Get the list of the bomb in the level
 	 * @return an arraylist of bomb
@@ -85,44 +85,27 @@ public class Level {
 	/**
 	 * Create the planete of the world with it density
 	 * @param density, the density of planet in the world
+	 * @param lower, the lower range
+	 * @param upper, the upper range
 	 **/
-	public void createPlanet(int density){
+	public void createPlanet(int density, int lower, int upper){
 		int radius;
 		int x,y;
 		for(int i=0;i<density;i++){
 			radius = Random.GetIntRandom(20, 100);
 			x = Random.GetIntRandom(-7000, 7000);
 			y = Random.GetIntRandom(-7000, 7000);
-			if(coordinate.containsKey(x) && coordinate.containsValue(y)){
-				if(x>0 && y>0){
-					listPlanet.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x+200, y+200))));
-					coordinate.put(x+200, y+200);
-				}
-				if(x<0 && y<0){
-					listPlanet.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x-200, y-200))));
-					coordinate.put(x-200, y-200);
-				}
-				if(x>0 && y<0){
-					listPlanet.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x+200, y-200))));
-					coordinate.put(x+200, y-200);	
-				}
-				else{
-					listPlanet.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x-200, y+200))));
-					coordinate.put(x-200, y+200);
-				}
-			}
-			else{
-				listPlanet.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x, y))));
-				coordinate.put(x, y);
-			}
+			checkXYPlanet(listPlanet,x,y,radius);
 		}
 	}
-	
+
 	/**
 	 * Create the ennemy of the world with it density
 	 * @param density, the density of ennemy in the world
+	 * @param lower, the lower range
+	 * @param upper, the upper range
 	 **/
-	public void createEnnemy(int density){
+	public void createEnnemy(int density, int lower, int upper){
 		int x,y,choice;
 		for(int i=0;i<density;i++){
 			x = Random.GetIntRandom(0, 800);
@@ -146,22 +129,14 @@ public class Level {
 	 * Create the bomb of the world with it density
 	 * @param density, the density of bomb in the world
 	 * @param type, the type of bonus to generate
+	 * @param lower, the lower range
+	 * @param upper, the upper range
 	 */
-	public void createBomb(int density,Service.TYPEBONUS type) {
+	public void createBomb(int density,Service.TYPEBONUS type, int lower, int upper) {
 		int x,y;
 		for(int i=0;i<density;i++){
 			x = Random.GetIntRandom(-200, 800);
 			y = Random.GetIntRandom(-200, 800);
-//			if(type == Service.TYPEBONUS.BOMB){
-//				x = Random.GetIntRandom(0, 400);
-//				y = Random.GetIntRandom(0, 400);
-//				listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x, y),type)));
-//			}
-//			else{
-//				x = Random.GetIntRandom(400, 800);
-//				y = Random.GetIntRandom(400, 800);
-//				listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x, y),type)));
-//			}
 			if(coordinate.containsKey(x) && coordinate.containsValue(y)){
 				if(x>0 && y>0){
 					listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x+200, y+200),type)));
@@ -186,7 +161,7 @@ public class Level {
 			}
 		}
 	}
-	
+
 	/**
 	 * Remove Objects when get collision
 	 **/
@@ -206,6 +181,37 @@ public class Level {
 		for (int i = 0; i < listArmada.size(); i++) {
 			if(listArmada.get(0).getService().getFlagCollision())
 				listArmada.remove(i);
+		}
+	}
+	/***
+	 * Check if coordinates (x,y) are used or not
+	 * @param list, the list of object
+	 * @param x, x's object
+	 * @param y, y's object
+	 * @param radius, radius's object
+	 */
+	private void checkXYPlanet(ArrayList<Planet> list,int x, int y, int radius){
+		if(coordinate.containsKey(x) && coordinate.containsValue(y)){
+			if(x>0 && y>0){
+				list.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x+200, y+200))));
+				coordinate.put(x+200, y+200);
+			}
+			if(x<0 && y<0){
+				list.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x-200, y-200))));
+				coordinate.put(x-200, y-200);
+			}
+			if(x>0 && y<0){
+				list.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x+200, y-200))));
+				coordinate.put(x+200, y-200);	
+			}
+			else{
+				list.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x-200, y+200))));
+				coordinate.put(x-200, y+200);
+			}
+		}
+		else{
+			list.add(new Planet(new ServicePlanet(PhysicsEngine.getWorld(), radius, new Vec2(x, y))));
+			coordinate.put(x, y);
 		}
 	}
 }
