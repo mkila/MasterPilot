@@ -11,27 +11,43 @@ import org.jbox2d.dynamics.World;
 import fr.umlv.physics.CategoriesSpaceObject;
 
 public class ServicePlanet implements Service{
-
-private final Body planetBody;
 	
+	/**
+	 * Create the planet
+	 */
+
+	private final Body planetBody;
+
+	/**
+	 * Create the planet in the world at a position
+	 * @param world, the world to put the ship
+	 * @param radius, the radius of the planet
+	 * @param position, it position
+	 */
 	public ServicePlanet(World world,float radius,Vec2 position) {
 		planetBody=createBodyDef(world,radius,position);
 	}
-	
-	
-	public Body createBodyDef(World world,float radius,Vec2 position) {
+
+	/**
+	 * Create the planet in the world at a position
+	 * @param world, the world to put the ship
+	 * @param radius, the radius of the planet
+	 * @param position, it position
+	 * @return the body of the planet
+	 */
+	private Body createBodyDef(World world,float radius,Vec2 position) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.STATIC;
 		def.position.set(position.x, position.y);
-	
-	//Construction d'un cercle
+
+		// Create shape
 		CircleShape planetShape = new CircleShape();
 		planetShape.setRadius(radius);
-		
-	//Creation du body
+
+		// Create body
 		Body planetSpace = world.createBody(def);
-		
-	//Creation de la fixtureDef
+
+		// Create fixture
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 0.1f;
 		fixture.shape =planetShape;
@@ -41,35 +57,22 @@ private final Body planetBody;
 		planetSpace.createFixture(fixture);
 		return planetSpace;
 	}
-	
+
 	@Override
 	public Body getBody() {
 		return planetBody;
 	}
-	
-	public Vec2 getPosition() {
-		return this.planetBody.getPosition();
-	}
-
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		
 	}
-
 
 	@Override
-	public void collision() {
-		// TODO Auto-generated method stub
-		
+	public void collision(){
 	}
-
 
 	@Override
 	public boolean getFlagCollision() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

@@ -17,9 +17,18 @@ import fr.umlv.zen3.ApplicationContext;
 
 public class GraphicsEngine {
 
+	/**
+	 * This class provide the drawing of each Object in the World of jbox2d
+	 */
 	public static int WIDTH = 800;
 	public static int HEIGHT = 600;
 
+	/**
+	 * Draw a form in the world
+	 * @param context, the application context
+	 * @param object, a planet, ship or something else
+	 * @param heroPosition, the position of the object to set
+	 */
 	public static void drawSpaceObject(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
 		if(!object.getService().getBody().isActive())
 			return;
@@ -47,7 +56,6 @@ public class GraphicsEngine {
 					}
 				});
 				break;
-
 
 				//TODO Draw CHAIN	
 			case CHAIN:
@@ -84,9 +92,11 @@ public class GraphicsEngine {
 		}
 	}
 
-
-
-
+	/**
+	 * Choose the background color
+	 * @param context, the application context
+	 * @param color, the selected color
+	 */
 	public static void setBackground(ApplicationContext context, Color color) {
 		context.render(graphics -> {
 			Graphics2D g = graphics;
@@ -95,6 +105,10 @@ public class GraphicsEngine {
 
 	}
 
+	/**
+	 * Clear the application panel
+	 * @param context, the application context
+	 */
 	public static void graphicClear(ApplicationContext context) {
 		context.render(graphics -> {
 			Graphics2D g = graphics;
@@ -103,6 +117,12 @@ public class GraphicsEngine {
 
 	}
 
+	/**
+	 * Draw the missile weapon to fire 
+	 * @param context, the application context
+	 * @param object, the object which fire
+	 * @param heroPosition, the position of the hero (his worldCenter)
+	 */
 	public static void drawFire(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
 		LinkedList<Fire> fires = object.getService().getListFire();
 		for (Fire fire : fires) {
@@ -110,6 +130,12 @@ public class GraphicsEngine {
 		}
 	}
 
+	/**
+	 * Draw a bomb 
+	 * @param context, the application context
+	 * @param object, the object which  use the bomb
+	 * @param heroPosition, the center of the explosion
+	 */
 	public static void drawBomb(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
 		Fixture fixture = object.getService().getBody().getFixtureList();
 
@@ -136,12 +162,13 @@ public class GraphicsEngine {
 			}
 		});
 	}
-/***
- * Méthode qui dessine le bouclier en fonction des collision
- * @param context
- * @param hero
- */
-	public static void drawBouclier(ApplicationContext context,SpaceObject hero){
+	
+	/**
+	 * Draw the shield
+	 * @param context, the context application
+	 * @param hero, the object which used the shield
+	 */
+	public static void drawShield(ApplicationContext context,SpaceObject hero){
 		if(hero.getService().getFlagCollision()){
 			context.render(graphics -> {
 				graphics.translate(WIDTH/2 - hero.getService().getBody().getWorldCenter().x, HEIGHT/2 - hero.getService().getBody().getWorldCenter().y);
@@ -152,6 +179,12 @@ public class GraphicsEngine {
 		}
 	}
 
+	/**
+	 * Draw the TIE ship
+	 * @param context, the context application
+	 * @param hero, the object to draw
+	 * @param heroPosition, the position to shoot
+	 */
 	public static void drawTIE(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
 		if(!object.getService().getBody().isActive())
 			return;
@@ -166,7 +199,6 @@ public class GraphicsEngine {
 			g.translate(object.getService().getBody().getWorldCenter().x-22, object.getService().getBody().getWorldCenter().y-17.5);
 			g.transform(rotation);
 			graphics.fillPolygon(x, y, x.length);
-
 		});
 	}
 }

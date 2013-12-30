@@ -16,13 +16,21 @@ import fr.umlv.space.object.Fire;
 
 public class ServiceCroiser implements Service  {
 
+	/**
+	 * Create the Croiser ship
+	 */
+
 	private final Body croiserBody;
 	private final LinkedList<Fire> listFire;
 	private int temporisator;
 	private boolean collision;
 	private int life;
-	
-	
+
+	/**
+	 * Create the Croiser ship with in the world at a position
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 */
 	public ServiceCroiser(World world,Vec2 position) {
 		croiserBody=createBodyDef(world,position);
 		croiserBody.setAngularDamping(4f);
@@ -30,17 +38,20 @@ public class ServiceCroiser implements Service  {
 		temporisator = 0;
 		life=3;
 	}
-	
-	
+
+	/**
+	 * Create the jbox2d body for the croiser
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 * @return the body
+	 */
 	public Body createBodyDef(World world,Vec2 position) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(position.x, position.y);
 		def.angle = (float)Math.PI*3/2;
 
-	
-	
-	//Construction d'un triangle
+		// Create shape
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[4];
 		vertices[0] = new Vec2(0,0);
@@ -48,11 +59,11 @@ public class ServiceCroiser implements Service  {
 		vertices[2] = new Vec2(35,0);
 		vertices[3] = new Vec2(35,65);
 		spaceshipShape.set(vertices, vertices.length);
-		
-		
-	//Creation du body
+
+		// Create body
 		Body tieSpace = world.createBody(def);
-	//Creation de la fixtureDef
+		
+		// Create fixture
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 10f;
 		fixture.friction= 10f;
@@ -66,42 +77,40 @@ public class ServiceCroiser implements Service  {
 		tieSpace.setAngularDamping(0.5f);
 		return tieSpace;
 	}
-	
+
 	@Override
 	public Body getBody() {
 		return croiserBody;
 	}
-	
+
 	public Vec2 getPosition() {
 		return this.croiserBody.getWorldCenter();
 	}
-	
+
 	public Vec2 getLinearVelocity() {
 		return this.croiserBody.getLinearVelocity();
 	}
-	
+
 	@Override
 	public void move(Vec2 implultion) {
 		croiserBody.applyForceToCenter(implultion);
 	}
-	
+
 	@Override
 	public LinkedList<Fire> getListFire() {
 		return listFire;
 	}
-	
+
 	@Override
 	public void fire(Vec2 positionHero) {
 		if(temporisator == 60 && life>0){
-		Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
-			 croiserBody.getWorldCenter(),positionHero));
-		listFire.offerFirst(fire);
-		temporisator=0;
+			Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
+					croiserBody.getWorldCenter(),positionHero));
+			listFire.offerFirst(fire);
+			temporisator=0;
 		}
 		temporisator++;
 	}
-
-
 
 	@Override
 	public void destroy() {
@@ -109,23 +118,19 @@ public class ServiceCroiser implements Service  {
 			collision=false;
 			life--;
 			if(life == 0){
-			PhysicsEngine.getWorld().destroyBody(croiserBody);
-			croiserBody.setActive(false);
+				PhysicsEngine.getWorld().destroyBody(croiserBody);
+				croiserBody.setActive(false);
 			}
 		}
 	}
 
-
 	@Override
 	public void collision() {
 		collision=true;
-
 	}
-
 
 	@Override
 	public boolean getFlagCollision() {
 		return collision;
 	}
-
 }

@@ -18,11 +18,19 @@ import fr.umlv.space.object.munition.Munition;
 
 public class ServiceHero implements Service{
 
+	/**
+	 * Create the Hero ship
+	 */
+
 	private final Body heroBody;
 	private final LinkedList<Fire> listFire;
 	private Munition munitionBomb;
 	private boolean collision;
 
+	/**
+	 * Create the Hero ship with in the world
+	 * @param world, the world to put the ship
+	 */
 	public ServiceHero(World world) {
 		heroBody=createBodyDef(world);
 		listFire = new LinkedList<Fire>();
@@ -30,13 +38,17 @@ public class ServiceHero implements Service{
 		collision=false;
 	}
 
+	/**
+	 * Create the Hero ship with in the world
+	 * @param world, the world to put the ship
+	 */
 	private Body createBodyDef(World world) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(400, 300);
 		def.angle = (float)Math.PI;
 
-		//Construction d'un triangle
+		// Create shape
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[3];
 		vertices[0] = new Vec2(0, 0);
@@ -44,9 +56,10 @@ public class ServiceHero implements Service{
 		vertices[2] = new Vec2(30, 0);
 		spaceshipShape.set(vertices, vertices.length);
 
-		//Creation du body
+		// Create body
 		Body heroSpace = world.createBody(def);
-		//Creation de la fixtureDef
+		
+		// Create fixture
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 10f;
 		fixture.friction= 10f;
@@ -81,7 +94,6 @@ public class ServiceHero implements Service{
 	public LinkedList<Fire> getListFire() {
 		return listFire;
 	}
-	
 
 	@Override
 	public void fire(Vec2 positionHero) {
@@ -89,8 +101,7 @@ public class ServiceHero implements Service{
 				heroBody.getAngle(), heroBody.getWorldCenter()));
 		listFire.offerFirst(fire);
 	}
-	
-	
+
 	@Override
 	public void destroy() {
 		this.collision();
@@ -106,6 +117,7 @@ public class ServiceHero implements Service{
 		return collision;
 	}
 
+	@Override
 	public void explosion(){
 		if(munitionBomb.getMunitionBomb()>0){
 			bomb(50000.f);
@@ -116,16 +128,20 @@ public class ServiceHero implements Service{
 			munitionBomb.setMunitionMega(munitionBomb.getMunitionMega()-1);
 		}
 	}
-	
-	public void bomb(float factor) {
+
+	/**
+	 * The definition of the bomb
+	 * @param factor positive factor make a BOMB, negative factor make a MEGA
+	 */
+	private	 void bomb(float factor) {
 		LinkedList<Body> bodyList = new LinkedList<>();
 		System.out.println("hero"+heroBody.getPosition().toString());
 		float rangeRadius = 400; 
 		for (Body b = heroBody.getWorld().getBodyList(); b != null; b = b.getNext()) {
 			if(b.getType() == BodyType.DYNAMIC && b.getFixtureList() != heroBody.getFixtureList())
 				if((heroBody.getPosition().x-rangeRadius<b.getPosition().x) && (b.getPosition().x<heroBody.getPosition().x+rangeRadius)
-					&&	(heroBody.getPosition().y-rangeRadius<b.getPosition().y) && (b.getPosition().y<heroBody.getPosition().y+rangeRadius))
-				bodyList.add(b);
+						&&	(heroBody.getPosition().y-rangeRadius<b.getPosition().y) && (b.getPosition().y<heroBody.getPosition().y+rangeRadius))
+					bodyList.add(b);
 		}
 		for(int i=0; i<bodyList.size();i++){
 			double diffX = bodyList.get(i).getPosition().x - heroBody.getPosition().x;

@@ -17,6 +17,10 @@ import fr.umlv.space.object.SpaceObject;
 import fr.umlv.space.object.SpaceShip;
 
 public class ServiceArmada implements Service {
+	
+	/**
+	 * Create the Armada ship
+	 */
 
 	private final Body armadaBody;
 	private final LinkedList<Fire> listFire;
@@ -24,6 +28,11 @@ public class ServiceArmada implements Service {
 	private int temporisator;
 	private boolean collision;
 
+	/**
+	 * Create the Armada ship with in the world at a position
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 */
 	public ServiceArmada(World world, Vec2 position) {
 		armadaBody = createBodyDef(world, position);
 		armadaBody.setAngularDamping(4f);
@@ -37,12 +46,18 @@ public class ServiceArmada implements Service {
 		collision=false;
 	}
 
-	public Body createBodyDef(World world, Vec2 position) {
+	/**
+	 * Create the jbox2d body for the armada
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 * @return the body
+	 */
+	private Body createBodyDef(World world, Vec2 position) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(position.x, position.y);
 
-		// Construction d'un triangle
+		// Create shape
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[4];
 		vertices[0] = new Vec2(0, 0);
@@ -51,9 +66,10 @@ public class ServiceArmada implements Service {
 		vertices[3] = new Vec2(20, 20);
 		spaceshipShape.set(vertices, vertices.length);
 
-		// Creation du body
+		// Create body
 		Body armadaSpace = world.createBody(def);
-		// Creation de la fixtureDef
+		
+		// Create fixture
 		FixtureDef fixture = new FixtureDef();
 		fixture.density = 10f;
 		fixture.friction = 10f;
@@ -123,17 +139,13 @@ public class ServiceArmada implements Service {
 		}
 	}
 
-
 	@Override
 	public void collision() {
 		collision=true;
-
 	}
-
 
 	@Override
 	public boolean getFlagCollision() {
 		return collision;
 	}
-
 }

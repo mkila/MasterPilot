@@ -16,12 +16,21 @@ import fr.umlv.space.object.Fire;
 
 public class ServiceTIE implements Service {
 
+	/**
+	 * Create the TIE ship
+	 */
+
 	private Body tieBody;
 	private final LinkedList<Fire> listFire;
 	private int temporisator;
 	private boolean collision;
 
 
+	/**
+	 * Create the TIE ship with in the world at a position
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 */
 	public ServiceTIE(World world,Vec2 position) {
 		tieBody=createBodyDef(world,position);
 		listFire = new LinkedList<Fire>();
@@ -29,16 +38,19 @@ public class ServiceTIE implements Service {
 		collision=false;
 	}
 
-
-	public Body createBodyDef(World world,Vec2 position) {
+	/**
+	 * Create the jbox2d body for the TIE
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 * @return the body
+	 */
+	private Body createBodyDef(World world,Vec2 position) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(position.x, position.y);
 		def.angle = (float)Math.PI*3/2;
 
-
-
-		//Construction d'un triangle
+		// Create shape
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[4];
 		vertices[0] = new Vec2(0,0);
@@ -47,10 +59,10 @@ public class ServiceTIE implements Service {
 		vertices[3] = new Vec2(35,35);
 		spaceshipShape.set(vertices, vertices.length);
 
-
-		//Creation du body
+		// Create body
 		Body tieSpace = world.createBody(def);
-		//Creation de la fixtureDef
+		
+		// Create fixture
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 10f;
 		fixture.friction= 10f;
@@ -99,7 +111,6 @@ public class ServiceTIE implements Service {
 		temporisator++;
 	}
 
-
 	@Override
 	public void destroy() {
 		if(collision){
@@ -108,13 +119,10 @@ public class ServiceTIE implements Service {
 		}
 	}
 
-
 	@Override
 	public void collision() {
 		collision=true;
-
 	}
-
 
 	@Override
 	public boolean getFlagCollision() {

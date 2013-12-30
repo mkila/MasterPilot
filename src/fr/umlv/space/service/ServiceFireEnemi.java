@@ -13,10 +13,19 @@ import fr.umlv.physics.PhysicsEngine;
 
 public class ServiceFireEnemi implements Service{
 
+	/**
+	 * Create the fire shoot enemies
+	 */
+
 	private Body missileBody;
 	private boolean collision;
-	
 
+	/**
+	 * Create the fire shoot for the enemies ships
+	 * @param world,the world to set the fire
+	 * @param shipPosition, the position to fire
+	 * @param positionHero, the target position where the fire reach
+	 */
 	public ServiceFireEnemi(World world, Vec2 shipPosition,Vec2 positionHero) {
 		missileBody=createBodyDef(world,(float)Math.tanh((positionHero.y-shipPosition.y)/(positionHero.x-shipPosition.x)),shipPosition, positionHero);
 		Vec2 tmp = new Vec2(positionHero.x-shipPosition.x,
@@ -26,16 +35,20 @@ public class ServiceFireEnemi implements Service{
 		collision =false;
 	}
 
-
-	public Body createBodyDef(World world,float angle, Vec2 shipPosition,Vec2 positionHero) {
+	/**
+	 * Create the fire shoot for the enemies ships
+	 * @param world, the world to set the fire
+	 * @param angle, the angle for shooting
+	 * @param shipPosition, the position to fire
+	 * @param positionHero, the target position where the fire reach
+	 */
+	private Body createBodyDef(World world,float angle, Vec2 shipPosition,Vec2 positionHero) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(shipPosition.x, shipPosition.y);
 		def.angle=angle + (float)Math.PI/2;
 
-
-
-		//Construction d'un triangle
+		// Create shape
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[4];
 		vertices[0] = new Vec2(0,0);
@@ -44,11 +57,10 @@ public class ServiceFireEnemi implements Service{
 		vertices[3] = new Vec2(1,10);
 		spaceshipShape.set(vertices, vertices.length);
 
-
-		//Creation du body
+		// Create body
 		Body missileSpace = world.createBody(def);
 
-		//Creation de la fixtureDef
+		// Create fixture
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 1f;
 		fixture.friction= 1f;
@@ -62,12 +74,10 @@ public class ServiceFireEnemi implements Service{
 
 	}
 
-
 	@Override
 	public Body getBody() {
 		return missileBody;
 	}
-
 
 	@Override
 	public void destroy() {
@@ -77,12 +87,10 @@ public class ServiceFireEnemi implements Service{
 		}
 	}
 
-
 	@Override
 	public void collision() {
 		collision = true;
 	}
-
 
 	@Override
 	public boolean getFlagCollision() {

@@ -16,16 +16,7 @@ public class Parsor {
 	 * @throws IOException 
 	 * @throws JDOMException 
 	 */
-	
-	public static void main(String[] args) throws JDOMException, IOException {
-		System.out.println(parserXML("stage1.xml","ennemi"));
-		int wave = parserWave("stage1.xml");
-		for(int i=0; i<wave;i++){
-			StringBuilder b = new StringBuilder("ennemi");
-			b.append(i+1);
-			System.out.println(parserXML("stage1.xml",b.toString()));
-		}
-	}
+
 	/**
 	 * Parse the custom XML file.
 	 * @param fileName the name of the file
@@ -34,7 +25,6 @@ public class Parsor {
 	 * @throws JDOMException
 	 * @throws IOException
 	 */
-	
 	public static int parserXML(String fileName,String typeObject) throws JDOMException, IOException{
 		SAXBuilder sxb = new SAXBuilder();
 		Document document;
@@ -50,6 +40,13 @@ public class Parsor {
 		return density;
 	}
 	
+	/**
+	 * Retrieve the number of waves for a stage
+	 * @param fileName the name of the file
+	 * @return the number of wave for a stage
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
 	public static int parserWave(String fileName) throws JDOMException, IOException{
 		SAXBuilder sxb = new SAXBuilder();
 		Document document;

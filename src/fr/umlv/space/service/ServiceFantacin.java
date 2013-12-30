@@ -16,12 +16,19 @@ import fr.umlv.space.object.Fire;
 
 public class ServiceFantacin implements Service  {
 
+	/**
+	 * Create the Fantacin ship
+	 */
+
 	private final Body fantacinBody;
 	private final LinkedList<Fire> listFire;
 	private boolean collision;
-	
 
-
+	/**
+	 * Create the Fantacin ship with in the world at a position
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 */
 	public ServiceFantacin(World world,Vec2 position) {
 		fantacinBody=createBodyDef(world,position);
 		fantacinBody.setAngularDamping(4f);
@@ -29,26 +36,29 @@ public class ServiceFantacin implements Service  {
 		collision=false;
 	}
 
-
-	public Body createBodyDef(World world,Vec2 position) {
+	/**
+	 * Create the jbox2d body for the fantasin
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 * @return the body
+	 */
+	private Body createBodyDef(World world,Vec2 position) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(position.x, position.y);
 
-
-
-		//Construction d'un triangle
+		// Create shape
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[3];
 		vertices[0] = new Vec2(0,0);
-		vertices[1] = new Vec2(5,8.7f);
-		vertices[2] = new Vec2(10,0);
+		vertices[1] = new Vec2(10,20);
+		vertices[2] = new Vec2(20,0);
 		spaceshipShape.set(vertices, vertices.length);
 
-
-		//Creation du body
+		// Create body
 		Body tieSpace = world.createBody(def);
-		//Creation de la fixtureDef
+
+		// Create fixture
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 10f;
 		fixture.friction= 10f;
@@ -89,12 +99,11 @@ public class ServiceFantacin implements Service  {
 	@Override
 	public void fire(Vec2 positionHero) {
 		if(!collision){
-		Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
+			Fire fire=  new Fire(new ServiceFireEnemi(PhysicsEngine.getWorld(),
 					fantacinBody.getWorldCenter(),positionHero));
 			listFire.offerFirst(fire);
 		}
 	}
-
 
 	@Override
 	public void destroy() {
@@ -103,19 +112,15 @@ public class ServiceFantacin implements Service  {
 			fantacinBody.setActive(false);
 		}
 	}
-	
-	
+
 	@Override
 	public void collision() {
 		collision=true;
-	
 	}
-	
-	
+
 	@Override
 	public boolean getFlagCollision() {
 		return collision;
 	}
-
 }
 

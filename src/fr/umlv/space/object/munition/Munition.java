@@ -78,5 +78,4 @@ public class Munition {
 	public int getMunitionMega() {
 		return munitionMega;
 	}
-	
 }

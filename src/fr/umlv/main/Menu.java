@@ -14,19 +14,20 @@ import fr.umlv.zen3.KeyboardKey;
 public class Menu {
 
 	/**
-	 *
 	 * Print the main menu of the application
 	 * Allow you to choose  your start level
-	 * 
 	 **/
 
 	/**
 	 * Load the primary resource of the game need
-	 * Allow the selection of the level
-	 * 
-	 * */
+	 * Allow the selection of the level 
+	 **/
 	ArrayList<String> level = new ArrayList<>();
 
+	/**
+	 * Print the menu of the application
+	 * @param fileName, a xml fileName or null (take all the xml file in .)
+	 */
 	public void printMenu(String fileName) {
 		
 		if(fileName == null){

@@ -13,10 +13,20 @@ import fr.umlv.physics.PhysicsEngine;
 
 public class ServiceFireHero implements Service{
 
-private Body missileBody;
-private boolean collision;
+	/**
+	 * Create the fire shoot hero
+	 */
 
-	
+	private Body missileBody;
+	private boolean collision;
+
+
+	/**
+	 * Create the fire shoot for the hero ships
+	 * @param world, the world to set the fire
+	 * @param angle, the angle for shooting
+	 * @param shipPosition, the position where the fire are created
+	 */
 	public ServiceFireHero(World world,float angle, Vec2 shipPosition) {
 		missileBody=createBodyDef(world,angle,shipPosition);
 		Vec2 tmp = new Vec2(-(float)Math.sin(angle)*1000,
@@ -25,16 +35,19 @@ private boolean collision;
 		collision =false;
 	}
 
-
-	public Body createBodyDef(World world,float angle, Vec2 shipPosition) {
+	/**
+	 * Create the fire shoot for the enemies ships
+	 * @param world, the world to set the fire
+	 * @param angle, the angle for shooting
+	 * @param shipPosition, the position to fire
+	 */
+	private Body createBodyDef(World world,float angle, Vec2 shipPosition) {
 		BodyDef def = new BodyDef();
 		def.type = BodyType.DYNAMIC;
 		def.position.set(shipPosition.x, shipPosition.y);
 		def.angle = angle;
 
-
-
-		//Construction d'un triangle
+		// Create shape
 		PolygonShape spaceshipShape = new PolygonShape();
 		Vec2[] vertices = new Vec2[4];
 		vertices[0] = new Vec2(0,0);
@@ -43,12 +56,10 @@ private boolean collision;
 		vertices[3] = new Vec2(1,10);
 		spaceshipShape.set(vertices, vertices.length);
 
-
-		//Creation du body
+		// Create body
 		Body missileSpace = world.createBody(def);
-	
-	//Creation de la fixtureDef
 
+		// Create fixture
 		FixtureDef fixture =new FixtureDef();
 		fixture.density= 1f;
 		fixture.friction= 1f;
@@ -62,12 +73,10 @@ private boolean collision;
 
 	}
 
-
 	@Override
 	public Body getBody() {
 		return missileBody;
 	}
-
 
 	@Override
 	public void destroy() {
@@ -77,12 +86,10 @@ private boolean collision;
 		}
 	}
 
-
 	@Override
 	public void collision() {
 		collision = true;
 	}
-
 
 	@Override
 	public boolean getFlagCollision() {

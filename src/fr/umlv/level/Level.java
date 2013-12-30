@@ -118,6 +118,10 @@ public class Level {
 		}
 	}
 	
+	/**
+	 * Create the ennemy of the world with it density
+	 * @param the density of ennemy in the world
+	 **/
 	public void createEnnemy(int density){
 		int x,y,choice;
 		for(int i=0;i<density;i++){
@@ -138,7 +142,7 @@ public class Level {
 		}
 	}
 	
-	/**listEnnemy
+	/**
 	 * Create the bomb of the world with it density
 	 * @param the density of bomb in the world
 	 **/
@@ -159,14 +163,7 @@ public class Level {
 	}
 	
 	/**
-	 * Clear the bonus when change level
-	 **/
-	public static void clearBonus() {
-		listBonus.clear();
-	}
-	
-	/**
-	 * Remove Object when get collision
+	 * Remove Objects when get collision
 	 **/
 	public void refresh() {
 		for (int i = 0; i < listBonus.size(); i++) {
@@ -181,7 +178,6 @@ public class Level {
 			if(listTIE.get(0).getService().getFlagCollision())
 				listTIE.remove(i);
 		}
-		
 		for (int i = 0; i < listArmada.size(); i++) {
 			if(listArmada.get(0).getService().getFlagCollision())
 				listArmada.remove(i);
