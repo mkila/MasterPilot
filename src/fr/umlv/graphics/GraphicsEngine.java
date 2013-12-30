@@ -146,24 +146,24 @@ public class GraphicsEngine {
 			context.render(graphics -> {
 				graphics.translate(WIDTH/2 - hero.getService().getBody().getWorldCenter().x, HEIGHT/2 - hero.getService().getBody().getWorldCenter().y);
 				Graphics2D g=graphics;
-				g.drawOval((int)hero.getService().getBody().getWorldCenter().x,(int)hero.getService().getBody().getWorldCenter().x, 60, 60);
+				g.drawOval((int)hero.getService().getBody().getWorldCenter().x-30,(int)hero.getService().getBody().getWorldCenter().y-30, 60, 60);
 			});
 			hero.getService().collision();
 		}
 	}
 
-	public static void drawTIE(ApplicationContext context,SpaceObject hero,Vec2 heroPosition){
-		if(hero.getService().getBody().isActive())
+	public static void drawTIE(ApplicationContext context,SpaceObject object,Vec2 heroPosition){
+		if(!object.getService().getBody().isActive())
 			return;
 		context.render(graphics -> {
 			graphics.translate(WIDTH/2 - heroPosition.x, HEIGHT/2 - heroPosition.y);
 			Graphics2D g=graphics;
-			//g.setColor(Color.BLUE);
+			g.setColor(Color.WHITE);
 			AffineTransform rotation = new AffineTransform();
-			rotation.rotate(hero.getService().getBody().getAngle(),22,17.5);
+			rotation.rotate(object.getService().getBody().getAngle(),22,17.5);
 			int[] x = {5,10,15,30,35,40,35,30,15,10};
 			int[] y = {15,40,17,17,40,15,0,12,12,0};
-			g.translate(hero.getService().getBody().getWorldCenter().x-22, hero.getService().getBody().getWorldCenter().y-17.5);
+			g.translate(object.getService().getBody().getWorldCenter().x-22, object.getService().getBody().getWorldCenter().y-17.5);
 			g.transform(rotation);
 			graphics.fillPolygon(x, y, x.length);
 
