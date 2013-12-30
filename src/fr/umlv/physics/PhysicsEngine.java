@@ -45,26 +45,23 @@ public class PhysicsEngine {
 	}
 
 
-	public static void tieBehavior(SpaceObject tie, Vec2 positionHero) {
-		if(tie.getService().getBody().isActive())
-			return;
-		Vec2 tmp = new Vec2((-(float) Math.sin(tie.getService().getBody()
-				.getAngle())) * 1000, ((float) Math.cos(tie.getService()
-				.getBody().getAngle())) * 1000);
-		tie.getService().getBody().applyForceToCenter(tmp.mul(2000));
 
-		float time = 10;
-		float torque = tie.getService().getBody().getInertia()
-				* (1 - tie.getService().getBody().getAngularVelocity()) / time;
-		tie.getService().getBody().applyTorque(torque);
-
-		Vec2 tmp2 = new Vec2(positionHero.x
-				- tie.getService().getBody().getWorldCenter().x, positionHero.y
-				- tie.getService().getBody().getWorldCenter().y);
-		tie.getService().getBody().applyForceToCenter(tmp2.mul(1000));
-
+	public static void tieBehavior(SpaceObject tie,Vec2 positionHero){
+		if(!tie.getService().getBody().isActive())
+			return;   
+		Vec2 tmp = new Vec2((-(float)Math.sin(tie.getService().getBody().getAngle()))*1000,
+		         ((float)Math.cos(tie.getService().getBody().getAngle()))*1000);
+		     tie.getService().getBody().applyForceToCenter(tmp.mul(2000));
+		     
+		     float time = 10;
+		     float torque = tie.getService().getBody().getInertia() * (1 - tie.getService().getBody().getAngularVelocity() ) / time;
+		     tie.getService().getBody().applyTorque(torque);
+		     
+		     Vec2 tmp2 = new Vec2(positionHero.x-tie.getService().getBody().getWorldCenter().x,
+		         positionHero.y-tie.getService().getBody().getWorldCenter().y);
+		     tie.getService().getBody().applyForceToCenter(tmp2.mul(1000));
 	}
-
+	
 	public static void croiserBehavior(SpaceObject croiser, SpaceObject hero) {
 		if(!croiser.getService().getBody().isActive())
 			return;
@@ -99,13 +96,13 @@ public class PhysicsEngine {
 			float distance1 = distance(croiser.getService().getBody().getWorldPoint(poly.getVertex(0)),hero.getService().getBody().getWorldCenter());
 			float distance2 = distance(croiser.getService().getBody().getWorldPoint(poly.getVertex(2)),hero.getService().getBody().getWorldCenter());
 			
-			if(distance1>distance2){
+			if(distance1<distance2){
 				float time = 1; // one second
 				float torque = croiser.getService().getBody().getInertia() * (1 - hero.getService().getBody().getAngularVelocity() ) / time;
 				croiser.getService().getBody().applyTorque(torque);
 			}
 			
-			if(distance1<distance2){
+			if(distance1>distance2){
 				float time = 1; // one second
 				float torque = hero.getService().getBody().getInertia() * (-1 - hero.getService().getBody().getAngularVelocity() ) / time;
 				croiser.getService().getBody().applyTorque(torque);
