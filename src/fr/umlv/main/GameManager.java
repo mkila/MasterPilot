@@ -21,8 +21,8 @@ public interface GameManager {
 	 * 
 	 * @param context a context object that take the window
 	 *  of the Menu class
-	 * @throws IOException 
-	 * @throws JDOMException 
+	 * @throws IOException
+	 * @throws JDOMException
 	 */
 	void printPlay(ApplicationContext context) throws JDOMException, IOException;
 

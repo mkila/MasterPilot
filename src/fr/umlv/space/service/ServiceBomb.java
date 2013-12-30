@@ -26,8 +26,10 @@ public class ServiceBomb implements Service{
 
 	/**
 	 * The constructor take a world, the position of the bomb in the world and his type
-	 * @param World world,Vec2 position,TYPEBONUS type
-	 **/
+	 * @param world, the world to put the ship
+	 * @param position, it position
+	 * @param type, it type
+	 */
 	public ServiceBomb(World world,Vec2 position,TYPEBONUS type) {
 		bombBody = createBodyDef(world,position,type);
 	}

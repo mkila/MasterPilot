@@ -182,7 +182,7 @@ public class GraphicsEngine {
 	/**
 	 * Draw the TIE ship
 	 * @param context, the context application
-	 * @param hero, the object to draw
+	 * @param object, the object to draw
 	 * @param heroPosition, the position to shoot
 	 */
 	public static void drawTIE(ApplicationContext context,SpaceObject object,Vec2 heroPosition){

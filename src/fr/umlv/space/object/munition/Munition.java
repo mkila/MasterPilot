@@ -12,22 +12,22 @@ public class Munition {
 	private int munitionBomb;
 	private int munitionMega;
 	
-	
 	/**
-	 * The constructor initialize the total bomb of the hero 
+	 * The constructor initialize the total bomb of the hero
 	 * at the beginning of the level
-	 * @param int munitionBomb, int munitionMega
-	 **/
+	 * @param munitionBomb, munition of BOMB
+	 * @param munitionMega, munition of MEGA
+	 */
 	public Munition(int munitionBomb, int munitionMega) {
 		this.munitionBomb = munitionBomb;
 		this.munitionMega = munitionMega;
 	}
-	
+		
 	/**
 	 * Get the total ammo of a bomb
-	 * @param Service.TYPEBONUS bonus
+	 * @param bonus, the type of Bonus
 	 * @return the total ammo of a bomb
-	 **/
+	 */
 	public int getMunition(Service.TYPEBONUS bonus) {
 		if(bonus == Service.TYPEBONUS.BOMB)
 			return munitionBomb;
@@ -38,8 +38,8 @@ public class Munition {
 	
 	/**
 	 * Decrease the total ammo of a bomb when use
-	 * @param Service.TYPEBONUS bonus
-	 **/
+	 * @param bonus, the type of Bonus
+	 */
 	public void setMunition(Service.TYPEBONUS bonus) {
 		if(bonus == Service.TYPEBONUS.BOMB)
 			munitionBomb--;
@@ -49,7 +49,7 @@ public class Munition {
 
 	/**
 	 * Set the total ammo of Bomb with the bonus
-	 * @param int munitionBomb
+	 * @param munitionBomb, munition BOMB
 	 **/
 	public void setMunitionBomb(int munitionBomb) {
 		this.munitionBomb = munitionBomb;
@@ -57,7 +57,7 @@ public class Munition {
 
 	/**
 	 * Set the total ammo of Mega with the bonus
-	 * @param int munitionMega
+	 * @param munitionMega munition MEGA
 	 **/
 	public void setMunitionMega(int munitionMega) {
 		this.munitionMega = munitionMega;

@@ -84,7 +84,7 @@ public class Level {
 
 	/**
 	 * Create the planete of the world with it density
-	 * @param the density of planet in the world
+	 * @param density, the density of planet in the world
 	 **/
 	public void createPlanet(int density){
 		int radius;
@@ -120,7 +120,7 @@ public class Level {
 	
 	/**
 	 * Create the ennemy of the world with it density
-	 * @param the density of ennemy in the world
+	 * @param density, the density of ennemy in the world
 	 **/
 	public void createEnnemy(int density){
 		int x,y,choice;
@@ -141,23 +141,48 @@ public class Level {
 			}			
 		}
 	}
-	
+
 	/**
 	 * Create the bomb of the world with it density
-	 * @param the density of bomb in the world
-	 **/
+	 * @param density, the density of bomb in the world
+	 * @param type, the type of bonus to generate
+	 */
 	public void createBomb(int density,Service.TYPEBONUS type) {
 		int x,y;
 		for(int i=0;i<density;i++){
-			if(type == Service.TYPEBONUS.BOMB){
-				x = Random.GetIntRandom(0, 400);
-				y = Random.GetIntRandom(0, 400);
-				listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x, y),type)));
+			x = Random.GetIntRandom(-200, 800);
+			y = Random.GetIntRandom(-200, 800);
+//			if(type == Service.TYPEBONUS.BOMB){
+//				x = Random.GetIntRandom(0, 400);
+//				y = Random.GetIntRandom(0, 400);
+//				listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x, y),type)));
+//			}
+//			else{
+//				x = Random.GetIntRandom(400, 800);
+//				y = Random.GetIntRandom(400, 800);
+//				listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x, y),type)));
+//			}
+			if(coordinate.containsKey(x) && coordinate.containsValue(y)){
+				if(x>0 && y>0){
+					listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x+200, y+200),type)));
+					coordinate.put(x+200, y+200);
+				}
+				if(x<0 && y<0){
+					listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x-200, y-200),type)));
+					coordinate.put(x-200, y-200);
+				}
+				if(x>0 && y<0){
+					listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x+200, y-200),type)));
+					coordinate.put(x+200, y-200);	
+				}
+				else{
+					listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x-200, y+200),type)));
+					coordinate.put(x-200, y+200);
+				}
 			}
 			else{
-				x = Random.GetIntRandom(400, 800);
-				y = Random.GetIntRandom(400, 800);
 				listBonus.add(new Bomb(new ServiceBomb(PhysicsEngine.getWorld(), new Vec2(x, y),type)));
+				coordinate.put(x, y);
 			}
 		}
 	}

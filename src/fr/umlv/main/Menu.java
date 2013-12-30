@@ -38,7 +38,7 @@ public class Menu {
 			for (int i = 0; i < listOfFiles.length; i++){
 				if (listOfFiles[i].isFile()){
 					files = listOfFiles[i].getName();
-					if (files.endsWith(".xml")){
+					if (files.contains("stage") && files.endsWith(".xml")){
 						level.add(files);
 					}
 				}

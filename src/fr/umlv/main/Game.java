@@ -34,7 +34,7 @@ public class Game implements GameManager{
 
 	/**
 	 * The constructor take a level,
-	 * @param Level, lvl load the level you have selected
+	 * @param stageName, lvl load the level you have selected
 	 **/
 
 	public Game(ArrayList<String> stageName){
@@ -87,8 +87,7 @@ public class Game implements GameManager{
 						GraphicsEngine.drawBomb(context,lvl.getListBomb().get(i1),hero.getService().getBody().getWorldCenter());        
 					}
 
-					for(int i1=0;i1<lvl.getlistTIE().size();i1++){
-						//GraphicsEngine.drawSpaceObject(context, lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());        
+					for(int i1=0;i1<lvl.getlistTIE().size();i1++){       
 						GraphicsEngine.drawTIE(context, lvl.getlistTIE().get(i1), hero.getService().getBody().getWorldCenter());        
 						GraphicsEngine.drawFire(context, lvl.getlistTIE().get(i1),hero.getService().getBody().getWorldCenter());
 						lvl.getlistTIE().get(i1).getService().fire(hero.getService().getBody().getPosition());
